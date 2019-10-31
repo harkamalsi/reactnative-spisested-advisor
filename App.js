@@ -1,19 +1,15 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { createAppContainer } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import HomeScreen from "./src/screens/home/index.js";
+import ResultScreen from "./src/screens/result/index.js";
+import FavouriteScreen from "./src/screens/favourite/index.js";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+const TabNavigator = createBottomTabNavigator({
+  Home: { screen: HomeScreen },
+  Result: { screen: ResultScreen },
+  Favourite: { screen: FavouriteScreen }
 });
+
+export default createAppContainer(TabNavigator);

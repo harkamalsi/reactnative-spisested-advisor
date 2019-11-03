@@ -1,14 +1,14 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-class FavouriteScreen extends React.Component {
+class DetailScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Favourites</Text>
+        <Text>Restaurant detail</Text>
       </View>
     );
   }
 }
 
-export default FavouriteScreen;
+export default DetailScreen;

@@ -1,22 +1,25 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
+import { createStackNavigator } from "react-navigation-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
+
 import HomeScreen from "./src/screens/home/index.js";
 import ResultScreen from "./src/screens/result/index.js";
-import FavouriteScreen from "./src/screens/favourite/index.js";
-class IconWithBadge extends React.Component {
-  render() {
-    const { name, badgeCount, color, size } = this.props;
-    return (
-      <View style={{ width: 24, height: 24, margin: 5 }}>
-        <Ionicons name={name} size={size} color={color} />
-      </View>
-    );
-  }
-}
+import FavouritesScreen from "./src/screens/favourites/index.js";
+import DetailScreen from "./src/screens/detail/index.js";
 
+//Stacks for tab elements
+const SearchStack = createStackNavigator({
+  Search: { screen: HomeScreen },
+  Result: { screen: ResultScreen },
+  Detail: { screen: DetailScreen }
+});
+const FavouritesStack = createStackNavigator({
+  Favourites: { screen: FavouritesScreen },
+  Detail: { screen: DetailScreen }
+});
+//Return an Icon component specific for each tab
 const getTabBarIcon = (navigation, focused, tintColor) => {
   const { routeName } = navigation.state;
   let IconComponent = Ionicons;
@@ -25,24 +28,18 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
     case "Search":
       iconName = "ios-search";
       break;
-    case "Favorites":
+    case "Favourites":
       iconName = "ios-star-outline";
       break;
   }
-
   return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
-const TabNavigator = createBottomTabNavigator({
-  Home: { screen: HomeScreen },
-  Result: { screen: ResultScreen },
-  Favourite: { screen: FavouriteScreen }
-});
-
+//It export an app containter with a bottom tab with Search and Favourites tabs and their relatives stacks
 export default createAppContainer(
   createBottomTabNavigator(
     {
-      Search: { screen: HomeScreen },
-      Favorites: { screen: FavouriteScreen }
+      Search: { screen: SearchStack },
+      Favourites: { screen: FavouritesStack }
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -50,7 +47,7 @@ export default createAppContainer(
           getTabBarIcon(navigation, focused, tintColor)
       }),
       tabBarOptions: {
-        activeTintColor: "blue",
+        activeTintColor: "#66bdff",
         inactiveTintColor: "gray"
       }
     }

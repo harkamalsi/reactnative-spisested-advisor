@@ -1,9 +1,13 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 
 class FavouriteScreen extends React.Component {
   render() {
-    return <Text>Favourite</Text>;
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Favourites</Text>
+      </View>
+    );
   }
 }
 

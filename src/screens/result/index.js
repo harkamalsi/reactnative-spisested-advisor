@@ -147,8 +147,6 @@ const data = [
 ];
 const ResultScreen = props => {
   const handlePress = (id, e) => {
-    console.log("clicked!");
-    console.log(id);
     props.navigation.navigate("Detail", {
       id: id
     });

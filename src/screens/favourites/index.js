@@ -1,9 +1,13 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { Button } from "react-native-elements";
 import List from "../../components/List/List";
 
 const FavouritesScreen = props => {
+  const handlePress = (id, e) => {
+    props.navigation.navigate("Detail", {
+      id: id
+    });
+  };
   const fetchFavouritesRestaurants = () => {
     //do something
     return [
@@ -56,11 +60,9 @@ const FavouritesScreen = props => {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>All your favourites restaurants</Text>
-      <Button
-        title="Restaurant"
-        onPress={() => this.props.navigation.navigate("Detail")}
-      />
-      <List listRawData={favourites}> </List>
+      <List listRawData={favourites} handlePress={handlePress.bind(this)}>
+        {" "}
+      </List>
     </View>
   );
 };

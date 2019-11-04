@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { Button } from "react-native-elements";
 import List from "../../components/List/List";
 
 const data = [

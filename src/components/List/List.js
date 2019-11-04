@@ -8,13 +8,14 @@ import { Dimensions } from "react-native";
 //import { bindActionCreators } from "redux";
 //import { connect } from "react-redux";
 //import { getResturants } from "../../reducers/fetchResturantsReducer";
+
 /*
     Renders a List like component with expandable rows.
 
     Props:
     {listRawData} = A list of object with raw data (needs formatting)
         each element of the array will be displayed as a row.
-    {saveReview} = Syncronises user review with backend
+    {handlePress} = Triggers a navigation to a detailed view for a given row
 
     {listRawData} =(Array) [
         {
@@ -36,6 +37,7 @@ const List = props => {
   function fetchMoreData() {
     //Fetches routine with stored query and append fetched data to already stored
     //only if last char of url (String) is not 0 (page 0, just for error preventing)
+
     /*  if (props.page !==0) {
       props.fetchMore(props.query + string(props.page);
     } */
@@ -65,6 +67,9 @@ const List = props => {
 };
 
 export default List;
+
+//to connect to store
+
 /* const mapStateToProps = state => {
   return {
     query: state.query,

@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
 import { Button } from "react-native-elements";
+import Smiley from "../../components/Smiley/Smiley";
 
 class HomeScreen extends React.Component {
   render() {
@@ -11,6 +12,9 @@ class HomeScreen extends React.Component {
           title="Search!"
           onPress={() => this.props.navigation.navigate("Result")}
         />
+        <Smiley year={2010} value={2}>
+          {" "}
+        </Smiley>
       </View>
     );
   }

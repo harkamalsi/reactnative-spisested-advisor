@@ -1,5 +1,9 @@
 {
   "expo": {
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": ["js", "jsx", "svg", "svgx"]
+    },
     "name": "Spisested Advisor",
     "slug": "project-4",
     "privacy": "public",

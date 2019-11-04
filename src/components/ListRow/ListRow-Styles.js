@@ -27,14 +27,17 @@ export default StyleSheet.create({
   },
   TextName: {
     fontSize: 20,
+    fontWeight: "200",
     flex: 2
   },
   TextCity: {
     fontSize: 15,
+    fontWeight: "100",
     flex: 1
   },
   TextRating: {
     fontSize: 20,
+    fontWeight: "400",
     alignSelf: "center"
   }
 });

@@ -66,7 +66,7 @@ const DetailScreen = promps => {
       <View style={{ height: screenHeight }}>
         <View
           style={{
-            backgroundColor: "#e2e2e2a9",
+            backgroundColor: "#e2e2e249",
             flexDirection: "column",
             flex: 2
           }}

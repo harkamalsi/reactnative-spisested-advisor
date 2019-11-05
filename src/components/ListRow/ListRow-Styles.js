@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   Row: {
     flexDirection: "row",
-    backgroundColor: "#e2e2e2a9",
+    backgroundColor: "#e2e2e249",
     justifyContent: "space-between",
     height: 80
   },

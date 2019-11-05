@@ -9,7 +9,8 @@ const DetailScreen = props => {
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
   const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
-  id = JSON.stringify(props.navigation.getParam("id", "NO-ID"));
+  id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
+
   const fetchRestaurantDetails = () => {
     fetch(endpoint + id, {
       headers: {
@@ -41,6 +42,7 @@ const DetailScreen = props => {
 
   useEffect(() => {
     //Fetch details for a restaurant given an ID (props down from previous screen)
+    //if there are not passed down as props( from result screen)
     let example = {
       name: "Mc donald",
       city: "Trondheim",
@@ -55,9 +57,11 @@ const DetailScreen = props => {
       sumStars: 122,
       numberOfRatings: 40
     };
+    if (props.navigation.state.params !== null)
+      setRestaurantDetails(props.navigation.state.params);
+    else fetchRestaurantDetails();
     //TODO: implementer symbiosis med backend
-    fetchRestaurantDetails();
-    setRestaurantDetails(example);
+    // setRestaurantDetails(example);
     //TODO:Check if there is a saved rating in the local storage,
     //if it is, update now rating with setStar and update rating given with setStarGiven
   }, []);
@@ -89,7 +93,11 @@ const DetailScreen = props => {
         >
           <View style={{ flex: 1 }}>
             <Text
-              style={{ fontSize: 40, fontWeight: "600", alignSelf: "center" }}
+              style={{
+                fontSize: 30,
+                fontWeight: "600",
+                alignSelf: "center"
+              }}
             >
               {restaurant.name}
             </Text>

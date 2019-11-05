@@ -30,9 +30,10 @@ const ResultScreen = props => {
   };
 
   const handlePress = (id, e) => {
-    props.navigation.navigate("Detail", {
-      id: id
-    });
+    let restaurant = restaurants.filter(restaurant => {
+      return restaurant._id === id;
+    })[0];
+    props.navigation.navigate("Detail", restaurant);
   };
   const loadMore = () => {};
   useEffect(() => {

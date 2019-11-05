@@ -1,162 +1,57 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View } from "react-native";
 import List from "../../components/List/List";
 
-const data = [
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 1
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 2
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 3
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 4
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 5
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 6
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 7
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 8
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 9
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 10
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 11
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 12
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 13
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 14
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 15
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 16
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 17
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 18
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 19
-  },
-  {
-    name: "Lang navn ok?",
-    city: "Trondheim",
-    sumStars: 122,
-    numberOfRatings: 20,
-    _id: 20
-  }
-];
 const ResultScreen = props => {
+  const [restaurants, setRestaurant] = useState([]);
+  const [page, setPage] = useState(0);
+  const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
+  let query = props.navigation.getParam("query", "NO-QUERY");
+
+  const fetchRestaurants = () => {
+    fetch(endpoint + query + page, {
+      headers: {
+        "Content-type": "text/html; charset=iso-8859-1"
+      },
+      mode: "cors"
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.error) {
+          throw res.error;
+        }
+        let tmp = [...restaurants];
+        res.map(restaurant => {
+          tmp.push(restaurant);
+        });
+        setRestaurant(tmp);
+        setPage(page + 1);
+      });
+  };
+
   const handlePress = (id, e) => {
     props.navigation.navigate("Detail", {
       id: id
     });
   };
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 30 }}>Results</Text>
+  const loadMore = () => {};
+  useEffect(() => {
+    //Fetch restaurants matching query
+    fetchRestaurants();
+  }, []);
+  if (restaurants.length === 0) return <Text>Loading...</Text>;
+  else
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ fontSize: 30 }}>Results</Text>
 
-      <List listRawData={data} handlePress={handlePress.bind(this)}></List>
-    </View>
-  );
+        <List
+          listRawData={restaurants}
+          handlePress={handlePress.bind(this)}
+          loadMore={fetchRestaurants.bind(this)}
+        ></List>
+      </View>
+    );
 };
 
 export default ResultScreen;

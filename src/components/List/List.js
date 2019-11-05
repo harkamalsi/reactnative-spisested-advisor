@@ -16,7 +16,7 @@ import { Dimensions } from "react-native";
     {listRawData} = A list of object with raw data (needs formatting)
         each element of the array will be displayed as a row.
     {handlePress} = Triggers a navigation to a detailed view for a given row
-
+    {loadMore} = It loads more data from server with the same query and incrementing page
     {listRawData} =(Array) [
         {
             id: "(Int)Unique ID for Business
@@ -34,16 +34,6 @@ import { Dimensions } from "react-native";
 */
 
 const List = props => {
-  function fetchMoreData() {
-    //Fetches routine with stored query and append fetched data to already stored
-    //only if last char of url (String) is not 0 (page 0, just for error preventing)
-
-    /*  if (props.page !==0) {
-      props.fetchMore(props.query + string(props.page);
-    } */
-    console.log("fetching...");
-  }
-
   //Get the width of the devices screen
   const screenWidth = Math.round(Dimensions.get("window").width);
 
@@ -59,7 +49,7 @@ const List = props => {
           ></ListRow>
         )}
         keyExtractor={item => item._id.toString()}
-        onEndReached={fetchMoreData.bind(this)}
+        onEndReached={props.loadMore}
         onEndReachedThreshold={1}
       />
     </View>

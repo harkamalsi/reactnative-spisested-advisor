@@ -4,13 +4,27 @@ import { Dimensions } from "react-native";
 import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
 
-const DetailScreen = promps => {
+const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
-
-  id = JSON.stringify(promps.navigation.getParam("id", "NO-ID"));
-
+  const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
+  id = JSON.stringify(props.navigation.getParam("id", "NO-ID"));
+  const fetchRestaurantDetails = () => {
+    fetch(endpoint + id, {
+      headers: {
+        "Content-type": "text/html; charset=iso-8859-1"
+      },
+      mode: "cors"
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.error) {
+          throw res.error;
+        }
+        setRestaurant(tmp);
+      });
+  };
   const formatSmileys = smileys => {
     return smileys.map(smiley => (
       <Smiley
@@ -41,8 +55,9 @@ const DetailScreen = promps => {
       sumStars: 122,
       numberOfRatings: 40
     };
+    fetchRestaurantDetails();
     setRestaurantDetails(example);
-    //Check if there is a saved rating in the local storage,
+    //TODO:Check if there is a saved rating in the local storage,
     //if it is, update now rating with setStar and update rating given with setStarGiven
   }, []);
 

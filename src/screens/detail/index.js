@@ -55,6 +55,7 @@ const DetailScreen = props => {
       sumStars: 122,
       numberOfRatings: 40
     };
+    //TODO: implementer symbiosis med backend
     fetchRestaurantDetails();
     setRestaurantDetails(example);
     //TODO:Check if there is a saved rating in the local storage,

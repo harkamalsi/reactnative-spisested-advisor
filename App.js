@@ -54,4 +54,4 @@ export default createAppContainer(
   )
 );
 //This will suppress warnings in Expo
-console.disableYellowBox = true;
+console.disableYellowBox = false;

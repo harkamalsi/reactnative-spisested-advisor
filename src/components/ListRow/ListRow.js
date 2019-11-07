@@ -21,8 +21,8 @@ const ListRow = props => {
         </View>
         <Smiley style={styles.SmileyColumn} year={2019} value={1} />
         <View style={styles.RatingColumn}>
-          {pic}
           <Text style={styles.TextRating}>{stars}</Text>
+          {pic}
         </View>
       </View>
     </TouchableOpacity>

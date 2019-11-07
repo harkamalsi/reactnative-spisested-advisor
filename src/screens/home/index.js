@@ -17,11 +17,15 @@ const orderAlternative = [
   { id: "SMILEY_ASC", name: "Fjes Sur-Glad" }
 ];
 const HomeScreen = props => {
-  const [name, setName] = useState("");
+  //Here are the possible options for the 3 selectors. Unfortunately it had to be
+  //a state-like with hooks otherwise i wouldn´t work with the Select2 components
   const [cityOptions, updateCityOptions] = useState([]);
   const [smileyOptions, updateSmileyOption] = useState(smileyAlternatives);
   const [orderOptions, setOrderOptions] = useState(orderAlternative);
 
+  //Those are the parameters that will be changed according the ui inputs.
+  //Then they will be used for building a query to send to the server
+  const [name, setName] = useState("");
   const [selectedCities, updateSelectedCities] = useState([]);
   const [selectedSmileys, updateSelectedSmileys] = useState([]);
   const [orderBy, setOrderBy] = useState(orderOptions[0].id);
@@ -51,7 +55,7 @@ const HomeScreen = props => {
       "&smileys=" +
       smileysString +
       "&page=";
-    console.log(query);
+    // Props the query to the result screen that will do the fetching
     props.navigation.navigate("Result", { query: query });
   };
   //Load list of cities from server to be used in the city selector component
@@ -77,7 +81,8 @@ const HomeScreen = props => {
       <Select2
         isSelectSingle
         style={{ borderRadius: 5 }}
-        popupTitle="Sorter etter smilefjes"
+        showSearchBox={false}
+        popupTitle="Velg en alternativ"
         title="Sorter etter"
         cancelButtonText="Avbryt"
         selectButtonText="Velg"

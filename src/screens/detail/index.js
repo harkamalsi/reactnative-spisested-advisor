@@ -3,7 +3,7 @@ import { Text, View, Image } from "react-native";
 import { Dimensions } from "react-native";
 import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
-import Map from './map'
+import Map from '../../components/Map/map';
 
 const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
@@ -12,6 +12,8 @@ const DetailScreen = props => {
   const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
   id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
 
+
+  // DEAD CODE??? VVVVV
   const fetchRestaurantDetails = () => {
     fetch(endpoint + id, {
       headers: {
@@ -161,7 +163,7 @@ const DetailScreen = props => {
           />
         </View>
         <View style={{ flex: 3 }}>
-          <Map coordinates={[63.404536, 10.418654]}></Map>
+          <Map restaurant={restaurant}></Map>
         </View>
       </View>
     );

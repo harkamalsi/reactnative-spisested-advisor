@@ -104,36 +104,50 @@ const Map = props => {
         "&amp;copy <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
     }
   ];
-
-   
- // let nameOfRestaurant =
-  //  "<p style='position: relative;background: #00aabb; margin-top: -75px;border-radius: .4em;width: 20vw;padding: 10px 5px; text-align: center; color: white; font-size: 0.5em;font-weight: bold; text-shadow: 0 -0.05em 0.1em rgba(0,0,0,.3);'>Burger King</p>";
-  
   // to edit the style of the speech-bubble, go to node_modules\react-native-webview-leaflet\assets\dist\index.html
-  let nameOfRestaurant = "<p class='speech-bubble'>Burger King </p>"
-  let icons = "📍";
 
+  let restaurantName = "<p class='speech-bubble'>" + props.restaurant.name + "</p>"
+  let center = props.restaurant.coordinates;
+  let pin = "📍";
+  let ownPositionMarker;
+
+  let noCoords = center === null ? true : false;
+
+  if (noCoords){
+    // coordinates to gløshaugen = defualt value
+    center = [63.404536, 10.418654];
+    restaurantName = "<p class='speech-bubble'> No coordinates available </p>"
+  } 
+
+  ownPositionMarker = {
+    coords: center, 
+    icon: noCoords ? restaurantName : pin,
+  }
+   
+  
   let popUp = {
     // zoom: 12,
     locations: [
       {
-        coords: props.coordinates,
-        icon: nameOfRestaurant,
-        size: [64, 64]
+        coords: center,
+        icon: restaurantName,
       }
     ]
   };
 
+
   onMapMarkerClicked = ({ payload }) => {
     // show more info when marker is clicked
-    if (payload.id !== undefined) {
-      console.log(`Marker Clicked: ${payload.id}`);
-      // adds a marker which is a popup with restaurant info
-      this.webViewLeaflet.sendMessage(popUp);
-    } else {
-      // if the popup is clicked again, send a empty list of locations to the map 
-      // so that the popup is hidden
-      this.webViewLeaflet.sendMessage({ locations: [] });
+    if (!noCoords){
+      if (payload.id !== undefined) {
+        console.log(`Marker Clicked: ${payload.id}`);
+        // adds a marker which is a popup with restaurant info
+        this.webViewLeaflet.sendMessage(popUp);
+      } else {
+        // if the popup is clicked again, send a empty list of locations to the map 
+        // so that the popup is hidden
+        this.webViewLeaflet.sendMessage({ locations: [] });
+      }
     }
   };
 
@@ -146,17 +160,13 @@ const Map = props => {
         // Optional: the component that will receive map events}
         eventReceiver={this}
         // Optional: the center of the displayed map
-        centerPosition={[63.415524, 10.404481]}
+        centerPosition={center}
         // Optional: a list of markers that will be displayed on the map
-        markers={[63.4, 10.41, 63.43, 10.42, 63.41, 10.4, 63.415524, 10.4]}
+        // markers={[63.4, 10.41, 63.43, 10.42, 63.41, 10.4, 63.415524, 10.4]}
         // Required: the map layers that will be displayed on the map. See below for a description of the map layers object
         mapLayers={mapLayers}
         // Optional: display a marker to be at a given location
-        ownPositionMarker={{
-          coords: props.coordinates,
-          icon: icons,
-          size: [36, 36]
-        }}
+        ownPositionMarker={ownPositionMarker}
         // Optional (defaults to false): display a button that centers the map on the coordinates of ownPostionMarker. Requires that "ownPositionMarker" prop be set
         centerButton={true}
         // Optional (defaults to false): cluster icons that are in the same area

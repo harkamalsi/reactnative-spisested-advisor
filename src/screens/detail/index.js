@@ -10,7 +10,7 @@ const DetailScreen = props => {
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
   const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
-  id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
+  const id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
 
   const getStorage = async () => {
     let storageValue;
@@ -32,12 +32,12 @@ const DetailScreen = props => {
     let setStorage = true;
 
     if (storageFavorites !== undefined) {
-      if (Array.isArray(storageFavorites)) {
-        storageFavorites.forEach(item => storageNames.push(item.name));
-      } else {
-        // storageFavorites is a single object
-        storageNames.push(storageFavorites.name);
-      }
+      //if (Array.isArray(storageFavorites)) {
+      storageFavorites.forEach(item => storageNames.push(item.name));
+      // } else {
+      // storageFavorites is a single object
+      // storageNames.push(storageFavorites.name);
+      // }
 
       storageNames.forEach(name => {
         if (name === favorite.name) {
@@ -122,7 +122,22 @@ const DetailScreen = props => {
     else fetchRestaurantDetails();
     //TODO: implementer symbiosis med backend
     // setRestaurantDetails(example);
-    //TODO:Check if there is a saved rating in the local storage,
+    //Check if there is a saved rating in the local storage,
+    getStorage().then(favouriteRestaurants =>
+      favouriteRestaurants.forEach(favouriteRestaurant => {
+        console.log("favrest", favouriteRestaurant);
+        console.log("id", id);
+
+        console.log("id", typeof id, "favid", typeof favouriteRestaurant._id);
+        console.log("match?", id.localeCompare(favouriteRestaurant._id));
+        if (id == favouriteRestaurant._id) {
+          console.log("match!");
+          setStarGiven(true);
+          setStar(favouriteRestaurant.sumStars);
+        }
+      })
+    );
+
     //if it is, update now rating with setStar and update rating given with setStarGiven
   }, []);
 

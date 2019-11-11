@@ -1,23 +1,78 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, Image } from "react-native";
-import { Dimensions } from "react-native";
-import Smiley from "../../components/Smiley/Smiley";
-import StarRating from "react-native-star-rating";
-import Map from './map'
+import React, { useState, useEffect } from 'react';
+import { Text, View, Image, AsyncStorage } from 'react-native';
+import { Dimensions } from 'react-native';
+import Smiley from '../../components/Smiley/Smiley';
+import StarRating from 'react-native-star-rating';
+import Map from './map';
 
 const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
-  const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
-  id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
+  const endpoint = 'http://it2810-02.idi.ntnu.no:5000/companies/';
+  id = JSON.stringify(props.navigation.getParam('_id', 'NO-ID'));
+
+  const getStorage = async () => {
+    let storageValue;
+    try {
+      storageValue = await AsyncStorage.getItem('@favorites');
+
+      if (storageValue) {
+        return JSON.parse(storageValue);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const setStorage = async favorite => {
+    let storageFavorites = await getStorage();
+
+    let storageNames = [];
+    let setStorage = true;
+
+    if (storageFavorites !== undefined) {
+      if (Array.isArray(storageFavorites)) {
+        storageFavorites.forEach(item => storageNames.push(item.name));
+      } else {
+        // storageFavorites is a single object
+        storageNames.push(storageFavorites.name);
+      }
+
+      storageNames.forEach(name => {
+        if (name === favorite.name) {
+          setStorage = false;
+        }
+      });
+    }
+
+    try {
+      // if favorite is not already saved (means setStorage = true) in storage then save it
+      if (setStorage) {
+        let newStorage;
+
+        if (storageFavorites === undefined) {
+          newStorage = [favorite];
+        } else {
+          newStorage = [...storageFavorites, favorite];
+        }
+
+        await AsyncStorage.setItem('@favorites', JSON.stringify(newStorage));
+      }
+    } catch (err) {
+      console.log('ERROR SETTING');
+      console.log(err);
+    }
+
+    console.log(storageNames);
+  };
 
   const fetchRestaurantDetails = () => {
     fetch(endpoint + id, {
       headers: {
-        "Content-type": "text/html; charset=iso-8859-1"
+        'Content-type': 'text/html; charset=iso-8859-1'
       },
-      mode: "cors"
+      mode: 'cors'
     })
       .then(res => res.json())
       .then(res => {
@@ -30,30 +85,51 @@ const DetailScreen = props => {
   const formatSmileys = smileys => {
     return smileys.map(smiley => (
       <Smiley
-        key={smiley.date + "-" + smiley.grade}
+        key={smiley.date + '-' + smiley.grade}
         value={smiley.grade}
         year={smiley.date.substring(4)}
       ></Smiley>
     ));
   };
   const onStarRatingPress = rating => {
+    let favorite = ({
+      name,
+      city,
+      address,
+      postcode,
+      smileys,
+      sumStars,
+      numberOfRatings
+    } = restaurant);
+
+    setStorage(restaurant);
     setStar(rating);
     setStarGiven(true);
   };
 
+  const remove = async () => {
+    try {
+      await AsyncStorage.removeItem('@favorites');
+    } catch (err) {
+      alert('Cannot remove!');
+    }
+  };
+
   useEffect(() => {
+    //remove();
+
     //Fetch details for a restaurant given an ID (props down from previous screen)
     //if there are not passed down as props( from result screen)
     let example = {
-      name: "Mc donald",
-      city: "Trondheim",
-      address: "somethingveien 3",
-      postcode: "7901",
+      name: 'Mc donald',
+      city: 'Trondheim',
+      address: 'somethingveien 3',
+      postcode: '7901',
       smileys: [
-        { date: "01022019", grade: 2 },
-        { date: "12122018", grade: 0 },
-        { date: "01022019", grade: 3 },
-        { date: "01022019", grade: 2 }
+        { date: '01022019', grade: 2 },
+        { date: '12122018', grade: 0 },
+        { date: '01022019', grade: 3 },
+        { date: '01022019', grade: 2 }
       ],
       sumStars: 122,
       numberOfRatings: 40
@@ -72,23 +148,23 @@ const DetailScreen = props => {
   if (restaurant !== null) {
     let textRating =
       restaurant.sumStars === 0
-        ? "No Rating yet"
-        : "Rating: " +
+        ? 'No Rating yet'
+        : 'Rating: ' +
           (restaurant.sumStars / restaurant.numberOfRatings).toString();
-    let textStar = !starGiven ? "Gi en vurdering :" : "Din vurdering:";
+    let textStar = !starGiven ? 'Gi en vurdering :' : 'Din vurdering:';
     //Get the height of the devices screen
-    const screenHeight = Math.round(Dimensions.get("window").height);
+    const screenHeight = Math.round(Dimensions.get('window').height);
     let smileys = formatSmileys(restaurant.smileys);
     let starPic = (
-      <Image style={{ height: 30, width: 30 }} source={require("./star.png")} />
+      <Image style={{ height: 30, width: 30 }} source={require('./star.png')} />
     );
 
     return (
       <View style={{ height: screenHeight }}>
         <View
           style={{
-            backgroundColor: "#e2e2e249",
-            flexDirection: "column",
+            backgroundColor: '#e2e2e249',
+            flexDirection: 'column',
             flex: 2
           }}
         >
@@ -96,8 +172,8 @@ const DetailScreen = props => {
             <Text
               style={{
                 fontSize: 30,
-                fontWeight: "600",
-                alignSelf: "center"
+                fontWeight: '600',
+                alignSelf: 'center'
               }}
             >
               {restaurant.name}
@@ -105,8 +181,8 @@ const DetailScreen = props => {
             <Text
               style={{
                 fontSize: 20,
-                fontWeight: "200",
-                alignSelf: "center",
+                fontWeight: '200',
+                alignSelf: 'center',
                 marginBottom: 40
               }}
             >
@@ -114,22 +190,22 @@ const DetailScreen = props => {
             </Text>
           </View>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}
+            style={{ flexDirection: 'row', justifyContent: 'space-around' }}
           >
             {smileys}
           </View>
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "center",
+              flexDirection: 'row',
+              justifyContent: 'center',
               marginBottom: 10
             }}
           >
             <Text
               style={{
                 fontSize: 20,
-                fontWeight: "400",
-                alignSelf: "center",
+                fontWeight: '400',
+                alignSelf: 'center',
                 marginRight: 5
               }}
             >
@@ -140,8 +216,8 @@ const DetailScreen = props => {
           <Text
             style={{
               fontSize: 20,
-              fontWeight: "200",
-              alignSelf: "center",
+              fontWeight: '200',
+              alignSelf: 'center',
               marginBottom: 10
             }}
           >
@@ -150,14 +226,14 @@ const DetailScreen = props => {
 
           <StarRating
             disabled={starGiven}
-            emptyStar={"ios-star-outline"}
-            fullStar={"ios-star"}
-            halfStar={"ios-star-half"}
-            iconSet={"Ionicons"}
+            emptyStar={'ios-star-outline'}
+            fullStar={'ios-star'}
+            halfStar={'ios-star-half'}
+            iconSet={'Ionicons'}
             maxStars={5}
             rating={star}
             selectedStar={rating => onStarRatingPress(rating)}
-            fullStarColor={"orange"}
+            fullStarColor={'orange'}
           />
         </View>
         <View style={{ flex: 3 }}>

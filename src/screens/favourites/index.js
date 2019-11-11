@@ -7,7 +7,7 @@ const FavoritesScreen = props => {
 
   const handlePress = (id, e) => {
     props.navigation.navigate("Detail", {
-      id: id
+      _id: id
     });
   };
 

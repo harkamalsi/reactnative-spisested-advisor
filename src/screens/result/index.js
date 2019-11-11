@@ -5,7 +5,7 @@ import List from "../../components/List/List";
 const ResultScreen = props => {
   const [restaurants, setRestaurant] = useState([]);
   const [page, setPage] = useState(0);
-  const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
+  const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/";
   let query = props.navigation.getParam("query", "NO-QUERY");
 
   const fetchRestaurants = () => {

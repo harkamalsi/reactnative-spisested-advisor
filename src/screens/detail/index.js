@@ -8,8 +8,8 @@ const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
-  const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
-  const id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
+  const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/id=";
+  const id = props.navigation.getParam("_id", "NO-ID");
 
   const getStorage = async () => {
     let storageValue;
@@ -31,12 +31,7 @@ const DetailScreen = props => {
     let setStorage = true;
 
     if (storageFavorites !== undefined) {
-      //if (Array.isArray(storageFavorites)) {
       storageFavorites.forEach(item => storageNames.push(item.name));
-      // } else {
-      // storageFavorites is a single object
-      // storageNames.push(storageFavorites.name);
-      // }
 
       storageNames.forEach(name => {
         if (name === favorite.name) {
@@ -67,6 +62,7 @@ const DetailScreen = props => {
   };
 
   const fetchRestaurantDetails = () => {
+    console.log(endpoint + id);
     fetch(endpoint + id, {
       headers: {
         "Content-type": "text/html; charset=iso-8859-1"
@@ -78,7 +74,8 @@ const DetailScreen = props => {
         if (res.error) {
           throw res.error;
         }
-        setRestaurant(tmp);
+        console.log("res", res[0]);
+        setRestaurantDetails(res[0]);
       });
   };
   const formatSmileys = smileys => {
@@ -124,7 +121,7 @@ const DetailScreen = props => {
     //Check if there is a saved rating in the local storage
     getStorage().then(favouriteRestaurants =>
       favouriteRestaurants.forEach(favouriteRestaurant => {
-        if (id == JSON.stringify(favouriteRestaurant._id)) {
+        if (id == favouriteRestaurant._id) {
           setStarGiven(true);
           setStar(favouriteRestaurant.sumStars);
         }

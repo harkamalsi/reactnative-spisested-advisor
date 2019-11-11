@@ -60,7 +60,7 @@ const HomeScreen = props => {
   };
   //Load list of cities from server to be used in the city selector component
   useEffect(() => {
-    fetch("http://it2810-02.idi.ntnu.no:5000/companies/cities", {})
+    fetch("http://it2810-02.idi.ntnu.no:5050/companies/cities", {})
       .then(res => res.json())
       .then(
         result => {

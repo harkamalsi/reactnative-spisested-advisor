@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Image, AsyncStorage } from "react-native";
+import { Text, View, Image } from "react-native";
 import { Dimensions } from "react-native";
 import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
-import Map from "./map";
-
+import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [star, setStar] = useState(0);
@@ -229,7 +228,7 @@ const DetailScreen = props => {
           />
         </View>
         <View style={{ flex: 3 }}>
-          <Map coordinates={[63.404536, 10.418654]}></Map>
+          <Text>Map</Text>
         </View>
       </View>
     );

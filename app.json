@@ -2,13 +2,22 @@
   "expo": {
     "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "svg", "svgx"]
+      "sourceExts": [
+        "js",
+        "jsx",
+        "svg",
+        "svgx"
+      ]
     },
-    "name": "Spisested Advisor",
-    "slug": "project-4",
+    "name": "Spisested Advisor osm",
+    "slug": "project-4-osm",
     "privacy": "public",
     "sdkVersion": "35.0.0",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -20,9 +29,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**./src/assets*"],
+    "assetBundlePatterns": [
+      "**./src/assets*"
+    ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }

@@ -1,7 +1,5 @@
-import React, { useState }from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { Constants, Location, Permissions } from "expo";
-
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 import WebViewLeaflet from "react-native-webview-leaflet";
 
@@ -85,13 +83,10 @@ import WebViewLeaflet from "react-native-webview-leaflet";
   }
 } */
 
-
- 
 const Map = props => {
-
-  // setState is a empty function becuase WebViewLeaflet.js expects a stateful component 
+  // setState is a empty function becuase WebViewLeaflet.js expects a stateful component
   // we dont need a stateful component
-  setState = () =>{}
+  setState = () => {};
 
   const mapLayers = [
     {
@@ -106,45 +101,49 @@ const Map = props => {
   ];
   // to edit the style of the speech-bubble, go to node_modules\react-native-webview-leaflet\assets\dist\index.html
 
-  let restaurantName = "<p class='speech-bubble'>" + props.restaurant.name + "</p>"
+  let restaurantName =
+    "<p class='speech-bubble'>" +
+    props.restaurant.name +
+    "<br> " +
+    props.restaurant.city +
+    "</p>";
   let center = props.restaurant.coordinates;
   let pin = "📍";
   let ownPositionMarker;
 
   let noCoords = center === null ? true : false;
 
-  if (noCoords){
+  if (noCoords) {
     // coordinates to gløshaugen = defualt value
-    center = [63.404536, 10.418654];
-    restaurantName = "<p class='speech-bubble'> No coordinates available </p>"
-  } 
+    
+    center = [63.415570, 10.404599];
+    restaurantName = "<p class='speech-bubble'> No coordinates available </p>";
+  }
 
   ownPositionMarker = {
-    coords: center, 
-    icon: noCoords ? restaurantName : pin,
-  }
-   
-  
+    coords: center,
+    icon: noCoords ? restaurantName : pin
+  };
+
   let popUp = {
     // zoom: 12,
     locations: [
       {
         coords: center,
-        icon: restaurantName,
+        icon: restaurantName
       }
     ]
   };
 
-
   onMapMarkerClicked = ({ payload }) => {
     // show more info when marker is clicked
-    if (!noCoords){
+    if (!noCoords) {
       if (payload.id !== undefined) {
         console.log(`Marker Clicked: ${payload.id}`);
         // adds a marker which is a popup with restaurant info
         this.webViewLeaflet.sendMessage(popUp);
       } else {
-        // if the popup is clicked again, send a empty list of locations to the map 
+        // if the popup is clicked again, send a empty list of locations to the map
         // so that the popup is hidden
         this.webViewLeaflet.sendMessage({ locations: [] });
       }
@@ -174,12 +173,11 @@ const Map = props => {
       />
     </View>
   );
-}; 
+};
 
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "#00ffff",
     height: 400,
     width: 410,
     display: "flex"

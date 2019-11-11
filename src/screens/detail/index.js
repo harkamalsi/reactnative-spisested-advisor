@@ -8,7 +8,7 @@ const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
-  const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
+  const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/";
   const id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
 
   const getStorage = async () => {

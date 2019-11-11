@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.2",
     "expo": "^35.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
@@ -23,6 +24,7 @@
     "react-native-svg-transformer": "^0.13.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.7",
+    "react-native-webview-leaflet": "https://github.com/andrerim/react-native-webview-leaflet/tarball/master",
     "react-navigation": "^4.0.10",
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.5.6"

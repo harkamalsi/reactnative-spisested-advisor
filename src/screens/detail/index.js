@@ -3,13 +3,68 @@ import { Text, View, Image } from "react-native";
 import { Dimensions } from "react-native";
 import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
-
+import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
   const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
-  id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
+  const id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
+
+  const getStorage = async () => {
+    let storageValue;
+    try {
+      storageValue = await AsyncStorage.getItem("@favorites");
+
+      if (storageValue) {
+        return JSON.parse(storageValue);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const setStorage = async favorite => {
+    let storageFavorites = await getStorage();
+
+    let storageNames = [];
+    let setStorage = true;
+
+    if (storageFavorites !== undefined) {
+      //if (Array.isArray(storageFavorites)) {
+      storageFavorites.forEach(item => storageNames.push(item.name));
+      // } else {
+      // storageFavorites is a single object
+      // storageNames.push(storageFavorites.name);
+      // }
+
+      storageNames.forEach(name => {
+        if (name === favorite.name) {
+          setStorage = false;
+        }
+      });
+    }
+
+    try {
+      // if favorite is not already saved (means setStorage = true) in storage then save it
+      if (setStorage) {
+        let newStorage;
+
+        if (storageFavorites === undefined) {
+          newStorage = [favorite];
+        } else {
+          newStorage = [...storageFavorites, favorite];
+        }
+
+        await AsyncStorage.setItem("@favorites", JSON.stringify(newStorage));
+      }
+    } catch (err) {
+      console.log("ERROR SETTING");
+      console.log(err);
+    }
+
+    console.log(storageNames);
+  };
 
   const fetchRestaurantDetails = () => {
     fetch(endpoint + id, {
@@ -36,33 +91,46 @@ const DetailScreen = props => {
     ));
   };
   const onStarRatingPress = rating => {
+    let favorite = {
+      _id: restaurant._id,
+      name: restaurant.name,
+      city: restaurant.city,
+      sumStars: rating,
+      numberOfRatings: 1
+    };
+    setStorage(favorite);
     setStar(rating);
     setStarGiven(true);
   };
 
+  const remove = async () => {
+    try {
+      await AsyncStorage.removeItem("@favorites");
+    } catch (err) {
+      alert("Cannot remove!");
+    }
+  };
+
   useEffect(() => {
+    //remove();
+
     //Fetch details for a restaurant given an ID (props down from previous screen)
     //if there are not passed down as props( from result screen)
-    let example = {
-      name: "Mc donald",
-      city: "Trondheim",
-      address: "somethingveien 3",
-      postcode: "7901",
-      smileys: [
-        { date: "01022019", grade: 2 },
-        { date: "12122018", grade: 0 },
-        { date: "01022019", grade: 3 },
-        { date: "01022019", grade: 2 }
-      ],
-      sumStars: 122,
-      numberOfRatings: 40
-    };
-    if (props.navigation.state.params !== null)
-      setRestaurantDetails(props.navigation.state.params);
+    const name = props.navigation.getParam("name", null);
+    if (name !== null) setRestaurantDetails(props.navigation.state.params);
     else fetchRestaurantDetails();
     //TODO: implementer symbiosis med backend
     // setRestaurantDetails(example);
-    //TODO:Check if there is a saved rating in the local storage,
+    //Check if there is a saved rating in the local storage
+    getStorage().then(favouriteRestaurants =>
+      favouriteRestaurants.forEach(favouriteRestaurant => {
+        if (id == JSON.stringify(favouriteRestaurant._id)) {
+          setStarGiven(true);
+          setStar(favouriteRestaurant.sumStars);
+        }
+      })
+    );
+
     //if it is, update now rating with setStar and update rating given with setStarGiven
   }, []);
 

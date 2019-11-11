@@ -122,16 +122,10 @@ const DetailScreen = props => {
     else fetchRestaurantDetails();
     //TODO: implementer symbiosis med backend
     // setRestaurantDetails(example);
-    //Check if there is a saved rating in the local storage,
+    //Check if there is a saved rating in the local storage
     getStorage().then(favouriteRestaurants =>
       favouriteRestaurants.forEach(favouriteRestaurant => {
-        console.log("favrest", favouriteRestaurant);
-        console.log("id", id);
-
-        console.log("id", typeof id, "favid", typeof favouriteRestaurant._id);
-        console.log("match?", id.localeCompare(favouriteRestaurant._id));
-        if (id == favouriteRestaurant._id) {
-          console.log("match!");
+        if (id == JSON.stringify(favouriteRestaurant._id)) {
           setStarGiven(true);
           setStar(favouriteRestaurant.sumStars);
         }

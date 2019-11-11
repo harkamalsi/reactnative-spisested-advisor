@@ -1,13 +1,13 @@
-import React from 'react';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { createStackNavigator } from 'react-navigation-stack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import React from "react";
+import { createAppContainer } from "react-navigation";
+import { createBottomTabNavigator } from "react-navigation-tabs";
+import { createStackNavigator } from "react-navigation-stack";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-import HomeScreen from './src/screens/home/index.js';
-import ResultScreen from './src/screens/result/index.js';
-import FavouritesScreen from './src/screens/favourites/index.js';
-import DetailScreen from './src/screens/detail/index.js';
+import HomeScreen from "./src/screens/home/index.js";
+import ResultScreen from "./src/screens/result/index.js";
+import FavouritesScreen from "./src/screens/favourites/index.js";
+import DetailScreen from "./src/screens/detail/index.js";
 
 //Stacks for tab elements
 const SearchStack = createStackNavigator({
@@ -25,11 +25,11 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   let IconComponent = Ionicons;
   let iconName;
   switch (routeName) {
-    case 'Search':
-      iconName = 'ios-search';
+    case "Search":
+      iconName = "ios-search";
       break;
-    case 'Favourites':
-      iconName = 'ios-star-outline';
+    case "Favourites":
+      iconName = "ios-star-outline";
       break;
   }
   return <IconComponent name={iconName} size={25} color={tintColor} />;
@@ -47,10 +47,9 @@ export default createAppContainer(
           getTabBarIcon(navigation, focused, tintColor)
       }),
       tabBarOptions: {
-        activeTintColor: '#66bdff',
-        inactiveTintColor: 'gray'
-      } /* ,
-      resetOnBlur: true */
+        activeTintColor: "#66bdff",
+        inactiveTintColor: "gray"
+      }
     }
   )
 );

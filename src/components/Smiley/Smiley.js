@@ -29,7 +29,7 @@ const Smiley = props => {
     pic = <Image style={styles.Image} source={require("./smiley-sad.png")} />;
   else pic = <div>Ikke</div>;
   return (
-    <View style={styles.CompleteSmiley}>
+    <View>
       {pic}
       <Text style={styles.Text}>{props.year}</Text>
     </View>

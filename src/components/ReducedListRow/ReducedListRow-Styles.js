@@ -7,20 +7,20 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     height: 80
   },
-  TextColumn: {
-    flex: 4,
-    flexDirection: "column",
+  NameColumn: {
+    flex: 3,
+    flexDirection: "row",
     justifyContent: "space-around",
     marginLeft: 10
   },
-  SmileyColumn: {
+  CityColumn: {
     flex: 2,
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center"
+    flexDirection: "row",
+    justifyContent: "space-around",
+    margin: 10
   },
   RatingColumn: {
-    flex: 3,
+    flex: 2,
     flexDirection: "row",
     justifyContent: "flex-end"
   },
@@ -33,20 +33,18 @@ export default StyleSheet.create({
   TextName: {
     fontSize: 20,
     fontWeight: "200",
-    textAlignVertical: "center",
-    flex: 2
+    flex: 2,
+    alignSelf: "center"
   },
   TextCity: {
     fontSize: 15,
     fontWeight: "100",
-    textAlignVertical: "center",
-    flex: 1
+    flex: 1,
+    alignSelf: "center"
   },
   TextRating: {
-    fontSize: 17,
-    textAlign: "center",
+    fontSize: 20,
     fontWeight: "400",
-    alignSelf: "center",
-    flex: 3
+    alignSelf: "center"
   }
 });

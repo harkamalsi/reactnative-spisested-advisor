@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ListRow from "../ListRow/ListRow.js";
+import ReducedListRow from "../ReducedListRow/ReducedListRow.js";
 import { FlatList, View } from "react-native";
 import { Dimensions } from "react-native";
 
@@ -10,7 +11,7 @@ import { Dimensions } from "react-native";
 //import { getResturants } from "../../reducers/fetchResturantsReducer";
 
 /*
-    Renders a List like component with expandable rows.
+    Renders a List like component with clickable rows.
 
     Props:
     {listRawData} = A list of object with raw data (needs formatting)
@@ -24,8 +25,7 @@ import { Dimensions } from "react-native";
             address: "(String)Adress without postcode"
             postcode: "(String)Postcode"
             city: "(String)City name",
-            smileys:"(String)Formatted as each review $date$'-'$resultValue(0-3)$ 
-                Each revies is separated by a '.' ",
+            smileys:"(Array of Obj)With a Date(STRING) in format ddmmyyyy and a grade (INT)(0-3)
             numberOfRatings: "(Int)Number of the total ratings ",
             sumStars:"(Int)Sum of all the stars given by the users"
         }, ...
@@ -36,18 +36,27 @@ import { Dimensions } from "react-native";
 const List = props => {
   //Get the width of the devices screen
   const screenWidth = Math.round(Dimensions.get("window").width);
-
+  //Renders a list with ListRow components if there are enought information,
+  //otherwise uses ReducedListRow components
   return (
     <View style={{ width: screenWidth }}>
       <FlatList
         data={props.listRawData}
-        renderItem={({ item }) => (
-          <ListRow
-            id={item._id}
-            rowData={item}
-            handleClick={props.handlePress.bind(this)}
-          ></ListRow>
-        )}
+        renderItem={({ item }) =>
+          item.smileys !== undefined ? (
+            <ListRow
+              id={item._id}
+              rowData={item}
+              handleClick={props.handlePress.bind(this)}
+            ></ListRow>
+          ) : (
+            <ReducedListRow
+              id={item._id}
+              rowData={item}
+              handleClick={props.handlePress.bind(this)}
+            ></ReducedListRow>
+          )
+        }
         keyExtractor={item => item._id.toString()}
         onEndReached={props.loadMore}
         onEndReachedThreshold={1}
@@ -57,24 +66,3 @@ const List = props => {
 };
 
 export default List;
-
-//to connect to store
-
-/* const mapStateToProps = state => {
-  return {
-    query: state.query,
-    page: state.page,
-    listRawData: getResturants(state)
-  };
-};
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      fetchMore: fetchMore
-    },
-    dispatch
-  );
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List); */

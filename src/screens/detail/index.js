@@ -7,16 +7,68 @@ import StarRating from "react-native-star-rating";
 //import Map from '../../components/Map/map-osm';
 import Map from '../../components/Map/map-native-maps';
 
+import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
-  const endpoint = "http://it2810-02.idi.ntnu.no:5000/companies/";
-  id = JSON.stringify(props.navigation.getParam("_id", "NO-ID"));
+  const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/id=";
+  const id = props.navigation.getParam("_id", "NO-ID");
+
+  const getStorage = async () => {
+    let storageValue;
+    try {
+      storageValue = await AsyncStorage.getItem("@favorites");
+
+      if (storageValue) {
+        return JSON.parse(storageValue);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const setStorage = async favorite => {
+    let storageFavorites = await getStorage();
+
+    let storageNames = [];
+    let setStorage = true;
+
+    if (storageFavorites !== undefined) {
+      storageFavorites.forEach(item => storageNames.push(item.name));
+
+      storageNames.forEach(name => {
+        if (name === favorite.name) {
+          setStorage = false;
+        }
+      });
+    }
+
+    try {
+      // if favorite is not already saved (means setStorage = true) in storage then save it
+      if (setStorage) {
+        let newStorage;
+
+        if (storageFavorites === undefined) {
+          newStorage = [favorite];
+        } else {
+          newStorage = [...storageFavorites, favorite];
+        }
+
+        await AsyncStorage.setItem("@favorites", JSON.stringify(newStorage));
+      }
+    } catch (err) {
+      console.log("ERROR SETTING");
+      console.log(err);
+    }
+
+    console.log(storageNames);
+  };
 
 
   // DEAD CODE??? VVVVV
   const fetchRestaurantDetails = () => {
+    console.log(endpoint + id);
     fetch(endpoint + id, {
       headers: {
         "Content-type": "text/html; charset=iso-8859-1"
@@ -28,46 +80,62 @@ const DetailScreen = props => {
         if (res.error) {
           throw res.error;
         }
-        setRestaurant(tmp);
+        console.log("res", res[0]);
+        setRestaurantDetails(res[0]);
       });
   };
   const formatSmileys = smileys => {
-    return smileys.map(smiley => (
-      <Smiley
-        key={smiley.date + "-" + smiley.grade}
-        value={smiley.grade}
-        year={smiley.date.substring(4)}
-      ></Smiley>
-    ));
+    return smileys
+      .slice(0, 5)
+      .map(smiley => (
+        <Smiley
+          key={smiley.date + "-" + smiley.grade}
+          value={smiley.grade}
+          year={smiley.date.substring(4)}
+        ></Smiley>
+      ));
   };
   const onStarRatingPress = rating => {
+    let favorite = {
+      _id: restaurant._id,
+      name: restaurant.name,
+      city: restaurant.city,
+      sumStars: rating,
+      numberOfRatings: 1
+    };
+    setStorage(favorite);
     setStar(rating);
     setStarGiven(true);
   };
 
+  const remove = async () => {
+    try {
+      await AsyncStorage.removeItem("@favorites");
+    } catch (err) {
+      alert("Cannot remove!");
+    }
+  };
+
   useEffect(() => {
+    //remove();
+
     //Fetch details for a restaurant given an ID (props down from previous screen)
     //if there are not passed down as props( from result screen)
-    let example = {
-      name: "Mc donald",
-      city: "Trondheim",
-      address: "somethingveien 3",
-      postcode: "7901",
-      smileys: [
-        { date: "01022019", grade: 2 },
-        { date: "12122018", grade: 0 },
-        { date: "01022019", grade: 3 },
-        { date: "01022019", grade: 2 }
-      ],
-      sumStars: 122,
-      numberOfRatings: 40
-    };
-    if (props.navigation.state.params !== null)
-      setRestaurantDetails(props.navigation.state.params);
+    const name = props.navigation.getParam("name", null);
+    if (name !== null) setRestaurantDetails(props.navigation.state.params);
     else fetchRestaurantDetails();
     //TODO: implementer symbiosis med backend
     // setRestaurantDetails(example);
-    //TODO:Check if there is a saved rating in the local storage,
+    //Check if there is a saved rating in the local storage
+    getStorage().then(favouriteRestaurants =>
+      favouriteRestaurants.forEach(favouriteRestaurant => {
+        if (id == favouriteRestaurant._id) {
+          setStarGiven(true);
+          setStar(favouriteRestaurant.sumStars);
+        }
+      })
+    );
+
     //if it is, update now rating with setStar and update rating given with setStarGiven
   }, []);
 
@@ -78,7 +146,9 @@ const DetailScreen = props => {
       restaurant.sumStars === 0
         ? "No Rating yet"
         : "Rating: " +
-          (restaurant.sumStars / restaurant.numberOfRatings).toString();
+          (restaurant.sumStars / restaurant.numberOfRatings)
+            .toFixed(2)
+            .toString();
     let textStar = !starGiven ? "Gi en vurdering :" : "Din vurdering:";
     //Get the height of the devices screen
     const screenHeight = Math.round(Dimensions.get("window").height);
@@ -93,40 +163,48 @@ const DetailScreen = props => {
           style={{
             backgroundColor: "#e2e2e249",
             flexDirection: "column",
-            flex: 2
+            //justifyContent: "flex-start",
+            flex: 1
           }}
         >
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 30,
-                fontWeight: "600",
-                alignSelf: "center"
-              }}
-            >
-              {restaurant.name}
-            </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "200",
-                alignSelf: "center",
-                marginBottom: 40
-              }}
-            >
-              {restaurant.address}, {restaurant.postcode}
-            </Text>
-          </View>
+          <Text
+            style={{
+              flex: 1.7,
+              fontSize: 25,
+              fontWeight: "600",
+              textAlign: "center",
+              textAlignVertical: "center"
+            }}
+          >
+            {restaurant.name}
+          </Text>
+          <Text
+            style={{
+              flex: 0.6,
+              fontSize: 17,
+              fontWeight: "200",
+              alignSelf: "center"
+            }}
+          >
+            {restaurant.address}, {restaurant.zipcode}
+          </Text>
+
           <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center"
+            }}
           >
             {smileys}
           </View>
           <View
             style={{
+              flex: 1,
               flexDirection: "row",
               justifyContent: "center",
-              marginBottom: 10
+              alignItems: "center"
             }}
           >
             <Text
@@ -143,16 +221,22 @@ const DetailScreen = props => {
           </View>
           <Text
             style={{
+              flex: 0.6,
               fontSize: 20,
               fontWeight: "200",
               alignSelf: "center",
-              marginBottom: 10
+              textAlignVertical: "center",
+              textAlign: "center"
             }}
           >
             {textStar}
           </Text>
-
           <StarRating
+            containerStyle={{
+              flex: 1,
+              justifyContent: "space-evenly",
+              alignItems: "center"
+            }}
             disabled={starGiven}
             emptyStar={"ios-star-outline"}
             fullStar={"ios-star"}

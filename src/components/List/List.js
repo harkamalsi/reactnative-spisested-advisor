@@ -24,8 +24,7 @@ import { Dimensions } from "react-native";
             address: "(String)Adress without postcode"
             postcode: "(String)Postcode"
             city: "(String)City name",
-            smileys:"(String)Formatted as each review $date$'-'$resultValue(0-3)$ 
-                Each revies is separated by a '.' ",
+            smileys:"(Array of Obj)With a Date(STRING) in format ddmmyyyy and a grade (INT)(0-3)
             numberOfRatings: "(Int)Number of the total ratings ",
             sumStars:"(Int)Sum of all the stars given by the users"
         }, ...
@@ -57,24 +56,3 @@ const List = props => {
 };
 
 export default List;
-
-//to connect to store
-
-/* const mapStateToProps = state => {
-  return {
-    query: state.query,
-    page: state.page,
-    listRawData: getResturants(state)
-  };
-};
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      fetchMore: fetchMore
-    },
-    dispatch
-  );
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(List); */

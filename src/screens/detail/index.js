@@ -115,6 +115,7 @@ const DetailScreen = props => {
           setStorage(favorite);
           setStar(rating);
           setStarGiven(true);
+          fetchRestaurantDetails();
         }
       });
   };

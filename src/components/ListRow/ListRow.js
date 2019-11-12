@@ -29,7 +29,7 @@ const ListRow = props => {
       : (row.sumStars / row.numberOfRatings).toFixed(2).toString() + "/5";
 
   let pic = <Image style={styles.Star} source={require("./star.png")} />;
-  console.log("rowData", props.rowData);
+  //console.log("rowData", props.rowData);
   return (
     //container for the all row (will have 3 coloumns )
     <TouchableOpacity onPress={e => props.handleClick(row._id, e)}>

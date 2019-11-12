@@ -10,7 +10,7 @@ import { Dimensions } from "react-native";
 //import { getResturants } from "../../reducers/fetchResturantsReducer";
 
 /*
-    Renders a List like component with expandable rows.
+    Renders a List like component with clickable rows.
 
     Props:
     {listRawData} = A list of object with raw data (needs formatting)

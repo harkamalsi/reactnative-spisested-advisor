@@ -79,13 +79,15 @@ const DetailScreen = props => {
       });
   };
   const formatSmileys = smileys => {
-    return smileys.map(smiley => (
-      <Smiley
-        key={smiley.date + "-" + smiley.grade}
-        value={smiley.grade}
-        year={smiley.date.substring(4)}
-      ></Smiley>
-    ));
+    return smileys
+      .slice(0, 5)
+      .map(smiley => (
+        <Smiley
+          key={smiley.date + "-" + smiley.grade}
+          value={smiley.grade}
+          year={smiley.date.substring(4)}
+        ></Smiley>
+      ));
   };
   const onStarRatingPress = rating => {
     let favorite = {
@@ -138,7 +140,9 @@ const DetailScreen = props => {
       restaurant.sumStars === 0
         ? "No Rating yet"
         : "Rating: " +
-          (restaurant.sumStars / restaurant.numberOfRatings).toString();
+          (restaurant.sumStars / restaurant.numberOfRatings)
+            .toFixed(2)
+            .toString();
     let textStar = !starGiven ? "Gi en vurdering :" : "Din vurdering:";
     //Get the height of the devices screen
     const screenHeight = Math.round(Dimensions.get("window").height);
@@ -174,7 +178,7 @@ const DetailScreen = props => {
                 marginBottom: 40
               }}
             >
-              {restaurant.address}, {restaurant.postcode}
+              {restaurant.address}, {restaurant.zipcode}
             </Text>
           </View>
           <View
@@ -211,8 +215,8 @@ const DetailScreen = props => {
           >
             {textStar}
           </Text>
-
           <StarRating
+            containerStyle={{ justifyContent: "space-evenly" }}
             disabled={starGiven}
             emptyStar={"ios-star-outline"}
             fullStar={"ios-star"}

@@ -8,22 +8,24 @@ export default StyleSheet.create({
     height: 80
   },
   TextColumn: {
-    flex: 2,
+    flex: 4,
     flexDirection: "column",
     justifyContent: "space-around"
   },
   SmileyColumn: {
+    flex: 3,
     alignSelf: "center"
   },
   RatingColumn: {
-    flex: 2,
+    flex: 3,
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "flex-end"
   },
   Star: {
     height: 30,
     width: 30,
-    alignSelf: "center"
+    alignSelf: "center",
+    margin: 10
   },
   TextName: {
     fontSize: 20,

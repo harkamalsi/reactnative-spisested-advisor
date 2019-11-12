@@ -90,6 +90,16 @@ const DetailScreen = props => {
       ));
   };
   const onStarRatingPress = rating => {
+    //logic for comunicating with API
+    let body = { id, stars: rating };
+    fetch("http://it2810-02.idi.ntnu.no:5050/companies/giverating", {
+      method: "PUT",
+      body: JSON.stringify(body),
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json; charset=utf-8"
+      }
+    });
     let favorite = {
       _id: restaurant._id,
       name: restaurant.name,

@@ -19,10 +19,7 @@ import styles from "./ReducedListRow-Styles.js";
 */
 const ReducedListRow = props => {
   let row = props.rowData;
-  let stars =
-    row.numberOfRatings === 0
-      ? "No rating yet"
-      : (row.sumStars / row.numberOfRatings).toFixed(2).toString() + "/5";
+  let stars = row.sumStars.toString() + "/5";
 
   let pic = <Image style={styles.Star} source={require("./star.png")} />;
   //console.log("rowData", props.rowData);

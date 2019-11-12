@@ -11,7 +11,7 @@ import { Dimensions } from "react-native";
 //import { getResturants } from "../../reducers/fetchResturantsReducer";
 
 /*
-    Renders a List like component with expandable rows.
+    Renders a List like component with clickable rows.
 
     Props:
     {listRawData} = A list of object with raw data (needs formatting)
@@ -25,8 +25,7 @@ import { Dimensions } from "react-native";
             address: "(String)Adress without postcode"
             postcode: "(String)Postcode"
             city: "(String)City name",
-            smileys:"(String)Formatted as each review $date$'-'$resultValue(0-3)$ 
-                Each revies is separated by a '.' ",
+            smileys:"(Array of Obj)With a Date(STRING) in format ddmmyyyy and a grade (INT)(0-3)
             numberOfRatings: "(Int)Number of the total ratings ",
             sumStars:"(Int)Sum of all the stars given by the users"
         }, ...

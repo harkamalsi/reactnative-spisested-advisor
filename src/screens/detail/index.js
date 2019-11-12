@@ -79,13 +79,15 @@ const DetailScreen = props => {
       });
   };
   const formatSmileys = smileys => {
-    return smileys.map(smiley => (
-      <Smiley
-        key={smiley.date + "-" + smiley.grade}
-        value={smiley.grade}
-        year={smiley.date.substring(4)}
-      ></Smiley>
-    ));
+    return smileys
+      .slice(0, 5)
+      .map(smiley => (
+        <Smiley
+          key={smiley.date + "-" + smiley.grade}
+          value={smiley.grade}
+          year={smiley.date.substring(4)}
+        ></Smiley>
+      ));
   };
   const onStarRatingPress = rating => {
     let favorite = {
@@ -138,7 +140,9 @@ const DetailScreen = props => {
       restaurant.sumStars === 0
         ? "No Rating yet"
         : "Rating: " +
-          (restaurant.sumStars / restaurant.numberOfRatings).toString();
+          (restaurant.sumStars / restaurant.numberOfRatings)
+            .toFixed(2)
+            .toString();
     let textStar = !starGiven ? "Gi en vurdering :" : "Din vurdering:";
     //Get the height of the devices screen
     const screenHeight = Math.round(Dimensions.get("window").height);
@@ -153,40 +157,48 @@ const DetailScreen = props => {
           style={{
             backgroundColor: "#e2e2e249",
             flexDirection: "column",
-            flex: 2
+            //justifyContent: "flex-start",
+            flex: 1
           }}
         >
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 30,
-                fontWeight: "600",
-                alignSelf: "center"
-              }}
-            >
-              {restaurant.name}
-            </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "200",
-                alignSelf: "center",
-                marginBottom: 40
-              }}
-            >
-              {restaurant.address}, {restaurant.postcode}
-            </Text>
-          </View>
+          <Text
+            style={{
+              flex: 1.7,
+              fontSize: 25,
+              fontWeight: "600",
+              textAlign: "center",
+              textAlignVertical: "center"
+            }}
+          >
+            {restaurant.name}
+          </Text>
+          <Text
+            style={{
+              flex: 0.6,
+              fontSize: 17,
+              fontWeight: "200",
+              alignSelf: "center"
+            }}
+          >
+            {restaurant.address}, {restaurant.zipcode}
+          </Text>
+
           <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center"
+            }}
           >
             {smileys}
           </View>
           <View
             style={{
+              flex: 1,
               flexDirection: "row",
               justifyContent: "center",
-              marginBottom: 10
+              alignItems: "center"
             }}
           >
             <Text
@@ -203,16 +215,22 @@ const DetailScreen = props => {
           </View>
           <Text
             style={{
+              flex: 0.6,
               fontSize: 20,
               fontWeight: "200",
               alignSelf: "center",
-              marginBottom: 10
+              textAlignVertical: "center",
+              textAlign: "center"
             }}
           >
             {textStar}
           </Text>
-
           <StarRating
+            containerStyle={{
+              flex: 1,
+              justifyContent: "space-evenly",
+              alignItems: "center"
+            }}
             disabled={starGiven}
             emptyStar={"ios-star-outline"}
             fullStar={"ios-star"}
@@ -224,7 +242,7 @@ const DetailScreen = props => {
             fullStarColor={"orange"}
           />
         </View>
-        <View style={{ flex: 3 }}>
+        <View style={{ flex: 1 }}>
           <Text>Map</Text>
         </View>
       </View>

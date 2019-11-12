@@ -36,8 +36,7 @@ const FavoritesScreen = props => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>All your favorites restaurants</Text>
+    <View style={{ flex: 1 }}>
       <List listRawData={favorites} handlePress={handlePress.bind(this)}>
         {" "}
       </List>

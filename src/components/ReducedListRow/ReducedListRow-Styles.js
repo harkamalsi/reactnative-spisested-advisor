@@ -8,17 +8,19 @@ export default StyleSheet.create({
     height: 80
   },
   NameColumn: {
-    flex: 4,
+    flex: 3,
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    marginLeft: 10
   },
   CityColumn: {
-    flex: 3,
+    flex: 2,
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    margin: 10
   },
   RatingColumn: {
-    flex: 3,
+    flex: 2,
     flexDirection: "row",
     justifyContent: "flex-end"
   },

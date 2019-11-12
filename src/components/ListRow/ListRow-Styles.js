@@ -8,36 +8,45 @@ export default StyleSheet.create({
     height: 80
   },
   TextColumn: {
-    flex: 2,
+    flex: 4,
     flexDirection: "column",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    marginLeft: 10
   },
   SmileyColumn: {
-    alignSelf: "center"
+    flex: 2,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
   },
   RatingColumn: {
-    flex: 2,
+    flex: 3,
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "flex-end"
   },
   Star: {
     height: 30,
     width: 30,
-    alignSelf: "center"
+    alignSelf: "center",
+    margin: 10
   },
   TextName: {
     fontSize: 20,
     fontWeight: "200",
+    textAlignVertical: "center",
     flex: 2
   },
   TextCity: {
     fontSize: 15,
     fontWeight: "100",
+    textAlignVertical: "center",
     flex: 1
   },
   TextRating: {
-    fontSize: 20,
+    fontSize: 17,
+    textAlign: "center",
     fontWeight: "400",
-    alignSelf: "center"
+    alignSelf: "center",
+    flex: 3
   }
 });

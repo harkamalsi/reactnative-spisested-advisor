@@ -43,9 +43,7 @@ const ResultScreen = props => {
   if (restaurants.length === 0) return <Text>Loading...</Text>;
   else
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 30 }}>Results</Text>
-
+      <View style={{ flex: 1 }}>
         <List
           listRawData={restaurants}
           handlePress={handlePress.bind(this)}

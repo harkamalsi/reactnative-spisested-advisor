@@ -99,17 +99,24 @@ const DetailScreen = props => {
       headers: {
         "Content-type": "application/json; charset=utf-8"
       }
-    });
-    let favorite = {
-      _id: restaurant._id,
-      name: restaurant.name,
-      city: restaurant.city,
-      sumStars: rating,
-      numberOfRatings: 1
-    };
-    setStorage(favorite);
-    setStar(rating);
-    setStarGiven(true);
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.error) {
+          throw res.error;
+        } else {
+          let favorite = {
+            _id: restaurant._id,
+            name: restaurant.name,
+            city: restaurant.city,
+            sumStars: rating,
+            numberOfRatings: 1
+          };
+          setStorage(favorite);
+          setStar(rating);
+          setStarGiven(true);
+        }
+      });
   };
 
   const remove = async () => {

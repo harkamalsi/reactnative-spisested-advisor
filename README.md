@@ -5,14 +5,13 @@ Andreas Rimolsrønning, Emanuele Caprioli, Harkamaljit Singh
 ## Spisested Advisor
 
 ### Hvordan installere og kjøre applikasjonen
-*   Først må prosjektet klones. Tast følgende i terminalen for å klone prosjektet: `git clone https://gitlab.stud.idi.ntnu.no/IT2810-H19/teams/team-2/project-3.git`
-*   Gå deretter inn i den klonede mappen ved å skrive følgende i terminalen: `cd project-3`
+*   Først må prosjektet klones. Tast følgende i terminalen for å klone prosjektet: `git clone https://gitlab.stud.idi.ntnu.no/IT2810-H19/teams/team-2/project-4.git`
+*   Gå deretter inn i den klonede mappen ved å skrive følgende i terminalen: `cd project-4`
+*   Istaller [Expo](https://expo.io/learn): `npm install expo-cli --global`
 *   Installer nødvendige filer:
     * I den klonede mappen tast følgende: `npm install`
-    * Gå deretter inn i client mappen og tast: `npm install`
-    * Gå deretter inn i backend mappen og tast: `npm install`
     * Tilslutt tast følgende kommando i terminalen, uavhengig av hvilken mappe du befinner deg i: `npm install -g nodemon concurrently` 
-*   Gå tilslutt i den første klonede mappen, project-3 og tast: `npm start`
+*   For å starte applikasjonen, bruk kommandoen: `expo start`
 
 Husk du må være koblet til NTNU nett: enten være på campus eller bruke vpn. 
 
@@ -29,7 +28,6 @@ Datasettet er hentet fra [mattilsynet](https://data.norge.no/data/mattilsynet/sm
 ![datasett](/uploads/aefe229a0435c1b1c212c63661759990/datasett.png)
 
 ## Testing
-Prosjektet er systematisk testet med unittesting og end-to-end testing. Unittestene tester om redux sine actions blir opprettet på en riktig måte av action creators. [Enzyme](https://airbnb.io/enzyme/) blir brukt til å sjekke om komponentene blir riktig rendret. For end-to-end testing, brukes [Cypress](https://www.cypress.io/). Her har vi flere tester, som blant annet tester søkefunksjonaliteten, at mer data blir fetchet ved scroll (pagination) og at ratingsystemet fungerer slik det skal. 
 
 I tillegg har vi kontinuerlig testet manuelt under utviklingen, og sørget for at alt fungerte slik det skal, før vi pushet til dev.
 

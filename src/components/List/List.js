@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import ListRow from "../ListRow/ListRow.js";
+import ReducedListRow from "../ReducedListRow/ReducedListRow.js";
 import { FlatList, View } from "react-native";
 import { Dimensions } from "react-native";
 
@@ -35,18 +36,27 @@ import { Dimensions } from "react-native";
 const List = props => {
   //Get the width of the devices screen
   const screenWidth = Math.round(Dimensions.get("window").width);
-
+  //Renders a list with ListRow components if there are enought information,
+  //otherwise uses ReducedListRow components
   return (
     <View style={{ width: screenWidth }}>
       <FlatList
         data={props.listRawData}
-        renderItem={({ item }) => (
-          <ListRow
-            id={item._id}
-            rowData={item}
-            handleClick={props.handlePress.bind(this)}
-          ></ListRow>
-        )}
+        renderItem={({ item }) =>
+          item.smileys !== undefined ? (
+            <ListRow
+              id={item._id}
+              rowData={item}
+              handleClick={props.handlePress.bind(this)}
+            ></ListRow>
+          ) : (
+            <ReducedListRow
+              id={item._id}
+              rowData={item}
+              handleClick={props.handlePress.bind(this)}
+            ></ReducedListRow>
+          )
+        }
         keyExtractor={item => item._id.toString()}
         onEndReached={props.loadMore}
         onEndReachedThreshold={1}

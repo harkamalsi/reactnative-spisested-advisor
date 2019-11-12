@@ -3,7 +3,9 @@ import { Text, View, Image } from "react-native";
 import { Dimensions } from "react-native";
 import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
-import Map from '../../components/Map/map';
+
+//import Map from '../../components/Map/map-osm';
+import Map from '../../components/Map/map-native-maps';
 
 const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
@@ -86,7 +88,7 @@ const DetailScreen = props => {
     );
 
     return (
-      <View style={{ height: screenHeight }}>
+      <View style={{flex: 1}}>
         <View
           style={{
             backgroundColor: "#e2e2e249",
@@ -162,8 +164,8 @@ const DetailScreen = props => {
             fullStarColor={"orange"}
           />
         </View>
-        <View style={{ flex: 3 }}>
-          <Map restaurant={restaurant}></Map>
+        <View style={{ flex: 3}}>
+           <Map restaurant={restaurant}></Map> 
         </View>
       </View>
     );

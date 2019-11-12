@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 
 import WebViewLeaflet from "react-native-webview-leaflet";
 
@@ -101,7 +101,7 @@ const Map = props => {
   ];
   // to edit the style of the speech-bubble, go to node_modules\react-native-webview-leaflet\assets\dist\index.html
 
-  let restaurantName =
+  let popupText =
     "<p class='speech-bubble'>" +
     props.restaurant.name +
     "<br> " +
@@ -114,23 +114,21 @@ const Map = props => {
   let noCoords = center === null ? true : false;
 
   if (noCoords) {
-    // coordinates to gløshaugen = defualt value
-    
-    center = [63.415570, 10.404599];
-    restaurantName = "<p class='speech-bubble'> No coordinates available </p>";
+    // coordinates to gløshaugen
+    center = [63.41557, 10.404599];
+    popupText = "<p class='speech-bubble'> No coordinates available </p>";
   }
 
   ownPositionMarker = {
     coords: center,
-    icon: noCoords ? restaurantName : pin
+    icon: noCoords ? popupText : pin
   };
 
   let popUp = {
-    // zoom: 12,
     locations: [
       {
         coords: center,
-        icon: restaurantName
+        icon: popupText
       }
     ]
   };
@@ -151,45 +149,32 @@ const Map = props => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.mapContainer}>
       <WebViewLeaflet
+        style={styles.mapContainer}
         ref={component => (webViewLeaflet = component)}
-        // Optional: a callback that will be called when the map is loaded
-        //onLoad={this.onLoad}
-        // Optional: the component that will receive map events}
+        // the component that will receive map events
         eventReceiver={this}
-        // Optional: the center of the displayed map
+        zoom={13}
+        // coordinates for the center of the map
         centerPosition={center}
-        // Optional: a list of markers that will be displayed on the map
-        // markers={[63.4, 10.41, 63.43, 10.42, 63.41, 10.4, 63.415524, 10.4]}
-        // Required: the map layers that will be displayed on the map. See below for a description of the map layers object
+        // map layers that will be displayed on the map. See below for a description of the map layers object
         mapLayers={mapLayers}
         // Optional: display a marker to be at a given location
         ownPositionMarker={ownPositionMarker}
-        // Optional (defaults to false): display a button that centers the map on the coordinates of ownPostionMarker. Requires that "ownPositionMarker" prop be set
-        centerButton={true}
-        // Optional (defaults to false): cluster icons that are in the same area
-        useMarkerClustering={true}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    ...StyleSheet.absoluteFillObject,
-    height: 400,
-    width: 410,
-    display: "flex"
-  },
-  statusBar: {
-    height: 100
-  },
-  controlButton: {
-    height: 40,
-    width: 40,
-    borderRadius: 5,
-    backgroundColor: "dodgerblue"
+  mapContainer: {
+    //...StyleSheet.absoluteFillObject,
+    /* width: Dimensions.get("window").width,*/
+    //height: Dimensions.get("window").height,
+
+    flex: 1
+    //flex: 0.5
   }
 });
 

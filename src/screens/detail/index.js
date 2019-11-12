@@ -3,6 +3,10 @@ import { Text, View, Image } from "react-native";
 import { Dimensions } from "react-native";
 import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
+
+//import Map from '../../components/Map/map-osm';
+import Map from '../../components/Map/map-native-maps';
+
 import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
@@ -61,6 +65,8 @@ const DetailScreen = props => {
     console.log(storageNames);
   };
 
+
+  // DEAD CODE??? VVVVV
   const fetchRestaurantDetails = () => {
     console.log(endpoint + id);
     fetch(endpoint + id, {
@@ -152,7 +158,7 @@ const DetailScreen = props => {
     );
 
     return (
-      <View style={{ height: screenHeight }}>
+      <View style={{flex: 1}}>
         <View
           style={{
             backgroundColor: "#e2e2e249",
@@ -242,8 +248,8 @@ const DetailScreen = props => {
             fullStarColor={"orange"}
           />
         </View>
-        <View style={{ flex: 1 }}>
-          <Text>Map</Text>
+        <View style={{ flex: 3}}>
+           <Map restaurant={restaurant}></Map> 
         </View>
       </View>
     );

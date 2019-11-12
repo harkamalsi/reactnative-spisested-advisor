@@ -157,40 +157,48 @@ const DetailScreen = props => {
           style={{
             backgroundColor: "#e2e2e249",
             flexDirection: "column",
-            flex: 2
+            //justifyContent: "flex-start",
+            flex: 1
           }}
         >
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 30,
-                fontWeight: "600",
-                alignSelf: "center"
-              }}
-            >
-              {restaurant.name}
-            </Text>
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "200",
-                alignSelf: "center",
-                marginBottom: 40
-              }}
-            >
-              {restaurant.address}, {restaurant.zipcode}
-            </Text>
-          </View>
+          <Text
+            style={{
+              flex: 1.7,
+              fontSize: 25,
+              fontWeight: "600",
+              textAlign: "center",
+              textAlignVertical: "center"
+            }}
+          >
+            {restaurant.name}
+          </Text>
+          <Text
+            style={{
+              flex: 0.6,
+              fontSize: 17,
+              fontWeight: "200",
+              alignSelf: "center"
+            }}
+          >
+            {restaurant.address}, {restaurant.zipcode}
+          </Text>
+
           <View
-            style={{ flexDirection: "row", justifyContent: "space-around" }}
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center"
+            }}
           >
             {smileys}
           </View>
           <View
             style={{
+              flex: 1,
               flexDirection: "row",
               justifyContent: "center",
-              marginBottom: 10
+              alignItems: "center"
             }}
           >
             <Text
@@ -207,16 +215,22 @@ const DetailScreen = props => {
           </View>
           <Text
             style={{
+              flex: 0.6,
               fontSize: 20,
               fontWeight: "200",
               alignSelf: "center",
-              marginBottom: 10
+              textAlignVertical: "center",
+              textAlign: "center"
             }}
           >
             {textStar}
           </Text>
           <StarRating
-            containerStyle={{ justifyContent: "space-evenly" }}
+            containerStyle={{
+              flex: 1,
+              justifyContent: "space-evenly",
+              alignItems: "center"
+            }}
             disabled={starGiven}
             emptyStar={"ios-star-outline"}
             fullStar={"ios-star"}
@@ -228,7 +242,7 @@ const DetailScreen = props => {
             fullStarColor={"orange"}
           />
         </View>
-        <View style={{ flex: 3 }}>
+        <View style={{ flex: 1 }}>
           <Text>Map</Text>
         </View>
       </View>

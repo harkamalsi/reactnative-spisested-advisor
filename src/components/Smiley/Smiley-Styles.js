@@ -1,26 +1,13 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  welcome: {
-    fontSize: 20
-  },
-  CompleteSmiley: {
-    flex: 1,
-    flexDirection: "column",
-    margin: 10
-  },
   Image: {
     height: 30,
-    width: 30,
-    alignSelf: "center"
+    width: 30
   },
   Text: {
-    fontSize: 15,
-    alignSelf: "center",
-    padding: 0,
-    margin: 0
+    fontSize: 12,
+    textAlign: "center",
+    width: 30
   }
 });

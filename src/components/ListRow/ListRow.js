@@ -35,16 +35,17 @@ const ListRow = props => {
     <TouchableOpacity onPress={e => props.handleClick(row._id, e)}>
       <View style={styles.Row}>
         <View style={styles.TextColumn}>
-          <Text numberOfLines={3} style={styles.TextName}>
+          <Text numberOfLines={2} style={styles.TextName}>
             {row.name}
           </Text>
           <Text style={styles.TextCity}>{row.city}</Text>
         </View>
-        <Smiley
-          style={styles.SmileyColumn}
-          year={row.smileys[0].date.substring(4)}
-          value={row.smileys[0].grade}
-        />
+        <View style={styles.SmileyColumn}>
+          <Smiley
+            year={row.smileys[0].date.substring(4)}
+            value={row.smileys[0].grade}
+          />
+        </View>
         <View style={styles.RatingColumn}>
           <Text style={styles.TextRating}>{stars}</Text>
           {pic}

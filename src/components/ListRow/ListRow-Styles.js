@@ -10,11 +10,14 @@ export default StyleSheet.create({
   TextColumn: {
     flex: 4,
     flexDirection: "column",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
+    marginLeft: 10
   },
   SmileyColumn: {
-    flex: 3,
-    alignSelf: "center"
+    flex: 2,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center"
   },
   RatingColumn: {
     flex: 3,
@@ -30,16 +33,20 @@ export default StyleSheet.create({
   TextName: {
     fontSize: 20,
     fontWeight: "200",
+    textAlignVertical: "center",
     flex: 2
   },
   TextCity: {
     fontSize: 15,
     fontWeight: "100",
+    textAlignVertical: "center",
     flex: 1
   },
   TextRating: {
-    fontSize: 20,
+    fontSize: 17,
+    textAlign: "center",
     fontWeight: "400",
-    alignSelf: "center"
+    alignSelf: "center",
+    flex: 3
   }
 });

@@ -9,7 +9,7 @@ const DetailScreen = props => {
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
   const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/id=";
-  const id = props.navigation.getParam("_id", "NO-ID");
+  const id = props.navigation.getParam("id", "NO-ID");
 
   const getStorage = async () => {
     let storageValue;
@@ -116,25 +116,28 @@ const DetailScreen = props => {
           setStar(rating);
           setStarGiven(true);
           fetchRestaurantDetails();
+          console.log(
+            "new values",
+            id,
+            restaurant.sumStars + rating,
+            restaurant.numberOfRatings + 1
+          );
+          props.navigation.state.params.onNewRating(
+            id,
+            restaurant.sumStars + rating,
+            restaurant.numberOfRatings + 1
+          );
         }
       });
   };
 
-  const remove = async () => {
-    try {
-      await AsyncStorage.removeItem("@favorites");
-    } catch (err) {
-      alert("Cannot remove!");
-    }
-  };
-
   useEffect(() => {
-    //remove();
-
     //Fetch details for a restaurant given an ID (props down from previous screen)
     //if there are not passed down as props( from result screen)
-    const name = props.navigation.getParam("name", null);
-    if (name !== null) setRestaurantDetails(props.navigation.state.params);
+    //const name = props.navigation.getParam("restaurant", null);
+    //console.log("name", name);
+    if (props.navigation.getParam("restaurant", null) !== null)
+      setRestaurantDetails(props.navigation.state.params.restaurant);
     else fetchRestaurantDetails();
     //TODO: implementer symbiosis med backend
     // setRestaurantDetails(example);

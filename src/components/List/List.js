@@ -41,6 +41,7 @@ const List = props => {
   return (
     <View style={{ width: screenWidth }}>
       <FlatList
+        extraData={props.listRawData}
         data={props.listRawData}
         renderItem={({ item }) =>
           item.smileys !== undefined ? (

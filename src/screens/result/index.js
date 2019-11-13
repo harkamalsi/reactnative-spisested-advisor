@@ -33,13 +33,36 @@ const ResultScreen = props => {
     let restaurant = restaurants.filter(restaurant => {
       return restaurant._id === id;
     })[0];
-    props.navigation.navigate("Detail", restaurant);
+    props.navigation.navigate("Detail", {
+      restaurant: restaurant,
+      id: restaurant._id,
+      onNewRating: updateGlobalRating.bind(this)
+    });
+  };
+
+  const updateGlobalRating = (id, newSumStars, newNumberOfRatings) => {
+    console.log("evaluating render");
+    let rowToUpdate = restaurants.filter(restaurant => {
+      return restaurant._id === id;
+    })[0];
+    if (
+      rowToUpdate.sumStars !== newSumStars &&
+      rowToUpdate.numberOfRatings !== newNumberOfRatings
+    ) {
+      console.log("render accepted");
+      rowToUpdate.sumStars = newSumStars;
+      rowToUpdate.numberOfRatings = newNumberOfRatings;
+      let newRestarantArray = [...restaurants];
+      newRestarantArray[newRestarantArray.indexOf(rowToUpdate)] = rowToUpdate;
+      setRestaurant(newRestarantArray);
+    }
   };
   const loadMore = () => {};
   useEffect(() => {
     //Fetch restaurants matching query
     fetchRestaurants();
   }, []);
+  console.log("rendering list....");
   if (restaurants.length === 0) return <Text>Loading...</Text>;
   else
     return (

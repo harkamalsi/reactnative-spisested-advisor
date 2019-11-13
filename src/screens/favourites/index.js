@@ -7,7 +7,7 @@ const FavoritesScreen = props => {
 
   const handlePress = (id, e) => {
     props.navigation.navigate("Detail", {
-      _id: id
+      id: id
     });
   };
 
@@ -20,7 +20,14 @@ const FavoritesScreen = props => {
       console.log("ERROR GETTING", err);
     }
   };
-
+  //Method for removing all favourites from async storage
+  const remove = async () => {
+    try {
+      await AsyncStorage.removeItem("@favorites");
+    } catch (err) {
+      alert("Cannot remove!");
+    }
+  };
   useEffect(() => {
     //Add an event listener that is triggered each time this tab is selected(focused)
     props.navigation.addListener("didFocus", () => {

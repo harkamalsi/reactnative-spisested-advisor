@@ -5,7 +5,7 @@ import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
 
 //import Map from '../../components/Map/map-osm';
-import Map from '../../components/Map/map-native-maps';
+import Map from "../../components/Map/map-native-maps";
 
 import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
@@ -13,7 +13,7 @@ const DetailScreen = props => {
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
   const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/id=";
-  const id = props.navigation.getParam("_id", "NO-ID");
+  const id = props.navigation.getParam("id", "NO-ID");
 
   const getStorage = async () => {
     let storageValue;
@@ -65,7 +65,6 @@ const DetailScreen = props => {
     console.log(storageNames);
   };
 
-
   // DEAD CODE??? VVVVV
   const fetchRestaurantDetails = () => {
     console.log(endpoint + id);
@@ -96,33 +95,54 @@ const DetailScreen = props => {
       ));
   };
   const onStarRatingPress = rating => {
-    let favorite = {
-      _id: restaurant._id,
-      name: restaurant.name,
-      city: restaurant.city,
-      sumStars: rating,
-      numberOfRatings: 1
-    };
-    setStorage(favorite);
-    setStar(rating);
-    setStarGiven(true);
-  };
-
-  const remove = async () => {
-    try {
-      await AsyncStorage.removeItem("@favorites");
-    } catch (err) {
-      alert("Cannot remove!");
-    }
+    //logic for comunicating with API
+    let body = { id, stars: rating };
+    fetch("http://it2810-02.idi.ntnu.no:5050/companies/giverating", {
+      method: "PUT",
+      body: JSON.stringify(body),
+      mode: "cors",
+      headers: {
+        "Content-type": "application/json; charset=utf-8"
+      }
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.error) {
+          throw res.error;
+        } else {
+          let favorite = {
+            _id: restaurant._id,
+            name: restaurant.name,
+            city: restaurant.city,
+            sumStars: rating,
+            numberOfRatings: 1
+          };
+          setStorage(favorite);
+          setStar(rating);
+          setStarGiven(true);
+          fetchRestaurantDetails();
+          console.log(
+            "new values",
+            id,
+            restaurant.sumStars + rating,
+            restaurant.numberOfRatings + 1
+          );
+          props.navigation.state.params.onNewRating(
+            id,
+            restaurant.sumStars + rating,
+            restaurant.numberOfRatings + 1
+          );
+        }
+      });
   };
 
   useEffect(() => {
-    //remove();
-
     //Fetch details for a restaurant given an ID (props down from previous screen)
     //if there are not passed down as props( from result screen)
-    const name = props.navigation.getParam("name", null);
-    if (name !== null) setRestaurantDetails(props.navigation.state.params);
+    //const name = props.navigation.getParam("restaurant", null);
+    //console.log("name", name);
+    if (props.navigation.getParam("restaurant", null) !== null)
+      setRestaurantDetails(props.navigation.state.params.restaurant);
     else fetchRestaurantDetails();
     //TODO: implementer symbiosis med backend
     // setRestaurantDetails(example);
@@ -158,7 +178,7 @@ const DetailScreen = props => {
     );
 
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View
           style={{
             backgroundColor: "#e2e2e249",
@@ -248,8 +268,8 @@ const DetailScreen = props => {
             fullStarColor={"orange"}
           />
         </View>
-        <View style={{ flex: 3}}>
-           <Map restaurant={restaurant}></Map> 
+        <View style={{ flex: 1 }}>
+          <Map restaurant={restaurant}></Map>
         </View>
       </View>
     );

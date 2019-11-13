@@ -5,7 +5,7 @@ import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
 
 //import Map from '../../components/Map/map-osm';
-import Map from '../../components/Map/map-native-maps';
+import Map from "../../components/Map/map-native-maps";
 
 import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
@@ -64,7 +64,6 @@ const DetailScreen = props => {
 
     console.log(storageNames);
   };
-
 
   // DEAD CODE??? VVVVV
   const fetchRestaurantDetails = () => {
@@ -179,7 +178,7 @@ const DetailScreen = props => {
     );
 
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <View
           style={{
             backgroundColor: "#e2e2e249",
@@ -269,8 +268,8 @@ const DetailScreen = props => {
             fullStarColor={"orange"}
           />
         </View>
-        <View style={{ flex: 3}}>
-           <Map restaurant={restaurant}></Map> 
+        <View style={{ flex: 1 }}>
+          <Map restaurant={restaurant}></Map>
         </View>
       </View>
     );

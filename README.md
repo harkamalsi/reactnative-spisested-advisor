@@ -52,6 +52,9 @@ Backend av prosjektet er implementert ved hjelp av Express. Express er et Node.j
 #### MongoDB
 Gruppen tar i bruk MongoDB som er installert på den virtuelle maskinen. For å kunne hente nødvendig data må det gjøres spørringer til databasen. Disse inkluderer også pagination spørringer.
 
+#### AsyncStorage
+Gruppen har brukt AsyncStorage fra react-native og ikke react-native-community. Gruppen er klar over at AysyncStorage fra react-native library er deprecated, men det viser seg at det er kun denne som fungere med expo.
+
 ## Tredjepartskomponenter
 
 ## Leaflet
@@ -70,9 +73,6 @@ React start komponent er rendered under hver List row komponent for å kunne gi 
 
 ### Hierarki diagram
 ![Diagram](/uploads/f395e1197c0c68d0785cf00e45631c80/Diagram.PNG)
-
-## Forhåndskrav
-For å kjøre prosjektet lokalt, trengs Node.js og NPM. NPM følger med når en laster ned [Node.js](https://nodejs.org/en/download/)
 
 
 ## Git-konvensjoner

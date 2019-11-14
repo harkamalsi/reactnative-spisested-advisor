@@ -62,6 +62,7 @@ For kartet brukes biblioteket [leaflet](https://leafletjs.com/), mens kart data 
 For å mappe restaurantadresser (geocoding), har vi brukt apiet fra [nominatim](https://nominatim.org).
 
 ## react-native-maps
+Det har vært mye fram og tilbake med map-komponenten. Først implementerte vi en kart som bruker tredjepartskompnenten react-native-webview-leaflet. Men ettersom dette ikke fungerte på android i development build av expo, gikk vi over til å bruke react-native-maps. Denne bruker mobiles innebyggde kart, som er Google Maps for android og Kart for iphone. Men utfordringen her er at Google Maps krever en api-key for å fungere, men slik det er nå fungerer den uten nøkkelen. Vi har gjort reaserch etter hvorfor det funger, men vi har ikke klart å funne noen begrunnelse. Derfor har vi valgt å fortsette å bruke react-native-maps.
 
 ## Mongoose 
 Mongoose er en library for MongoDB og Nodejs som gjør det enklere å kunne jobbe med MongoDB. Vi har brukt mongoose for å definere Schemas, noe som hjelper med å definere spesifikke strukturer med forhandsdefinerte data types for dokumenter som hentes og gis til MongoDB. I dette prosjektet brukes det også Validation gjennom mongoose for å kunne validere data typer. Mongoose gjør det også generelt mye enklere å kunne holde Schemas konsistent når det gjøres operasjoner på databasen (MongoDB). 

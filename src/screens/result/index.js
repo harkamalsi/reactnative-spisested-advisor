@@ -1,27 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
-import List from "../../components/List/List";
+import React, { useState, useEffect } from 'react';
+import { Text, View } from 'react-native';
+import List from '../../components/List/List';
 
 const ResultScreen = props => {
   const [restaurants, setRestaurant] = useState([]);
   let [noSearchMatch, setSearchMatch] = useState(false);
   const [page, setPage] = useState(0);
-  const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/";
-  let query = props.navigation.getParam("query", "NO-QUERY");
+  const endpoint = 'http://it2810-02.idi.ntnu.no:5050/companies/';
+  let query = props.navigation.getParam('query', 'NO-QUERY');
 
   const fetchRestaurants = () => {
     fetch(endpoint + query + page, {
       headers: {
-        "Content-type": "text/html; charset=iso-8859-1"
+        'Content-type': 'text/html; charset=iso-8859-1'
       },
-      mode: "cors"
+      mode: 'cors'
     })
       .then(res => res.json())
       .then(res => {
         if (res.error) {
           throw res.error;
         }
-        console.log(res.length === 0);
         if (res.length === 0) {
           setSearchMatch(true);
         } else {
@@ -39,7 +38,7 @@ const ResultScreen = props => {
     let restaurant = restaurants.filter(restaurant => {
       return restaurant._id === id;
     })[0];
-    props.navigation.navigate("Detail", {
+    props.navigation.navigate('Detail', {
       restaurant: restaurant,
       id: restaurant._id,
       onNewRating: updateGlobalRating.bind(this)
@@ -47,7 +46,6 @@ const ResultScreen = props => {
   };
 
   const updateGlobalRating = (id, newSumStars, newNumberOfRatings) => {
-    console.log("evaluating render");
     let rowToUpdate = restaurants.filter(restaurant => {
       return restaurant._id === id;
     })[0];
@@ -55,7 +53,6 @@ const ResultScreen = props => {
       rowToUpdate.sumStars !== newSumStars &&
       rowToUpdate.numberOfRatings !== newNumberOfRatings
     ) {
-      console.log("render accepted");
       rowToUpdate.sumStars = newSumStars;
       rowToUpdate.numberOfRatings = newNumberOfRatings;
       let newRestarantArray = [...restaurants];
@@ -70,9 +67,9 @@ const ResultScreen = props => {
   }, []);
   if (noSearchMatch) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={{ fontSize: 20 }}>
-          No eateries matched your search.{"\n"}Try broadening the search
+          No eateries matched your search.{'\n'}Try broadening the search
         </Text>
       </View>
     );

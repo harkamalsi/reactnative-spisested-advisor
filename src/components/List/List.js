@@ -1,14 +1,8 @@
-import React, { useEffect } from "react";
-import ListRow from "../ListRow/ListRow.js";
-import ReducedListRow from "../ReducedListRow/ReducedListRow.js";
-import { FlatList, View } from "react-native";
-import { Dimensions } from "react-native";
-
-//import "./List.css";
-//import fetchMore from "../../fetchDataAction/fetchMoreResturants";
-//import { bindActionCreators } from "redux";
-//import { connect } from "react-redux";
-//import { getResturants } from "../../reducers/fetchResturantsReducer";
+import React, { useEffect } from 'react';
+import ListRow from '../ListRow/ListRow.js';
+import ReducedListRow from '../ReducedListRow/ReducedListRow.js';
+import { FlatList, View } from 'react-native';
+import { Dimensions } from 'react-native';
 
 /*
     Renders a List like component with clickable rows.
@@ -35,7 +29,7 @@ import { Dimensions } from "react-native";
 
 const List = props => {
   //Get the width of the devices screen
-  const screenWidth = Math.round(Dimensions.get("window").width);
+  const screenWidth = Math.round(Dimensions.get('window').width);
   //Renders a list with ListRow components if there are enought information,
   //otherwise uses ReducedListRow components
   return (

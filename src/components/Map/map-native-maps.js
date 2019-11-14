@@ -1,7 +1,7 @@
-import React from "react";
-import MapView from "react-native-maps";
+import React from 'react';
+import MapView from 'react-native-maps';
 
-import { StyleSheet, Dimensions, View, Text } from "react-native";
+import { StyleSheet, Dimensions, View, Text } from 'react-native';
 
 const Map = props => {
   let coords = props.restaurant.coordinates;
@@ -13,7 +13,7 @@ const Map = props => {
   }
 
   // calculate aspect ratio to center the map on marker
-  const { width, height } = Dimensions.get("window");
+  const { width, height } = Dimensions.get('window');
   const apsect_ratio = width / height;
   const lat = coords[0];
   const lng = coords[1];
@@ -29,7 +29,7 @@ const Map = props => {
     longitudeDelta: lngDelta
   };
 
-  let popupText = props.restaurant.address + " " + props.restaurant.city;
+  let popupText = props.restaurant.address + ' ' + props.restaurant.city;
 
   const coordsMarker = () => {
     return (
@@ -48,8 +48,8 @@ const Map = props => {
           {...marker}
           style={{
             flex: 1,
-            backgroundColor: "white",
-            borderColor: "white",
+            backgroundColor: 'white',
+            borderColor: 'white',
             borderWidth: 5,
             borderRadius: 20
           }}
@@ -65,10 +65,7 @@ const Map = props => {
   const marker = noCoords ? noCoordsMarker() : coordsMarker();
 
   return (
-    <MapView
-      style={styles.mapStyle}
-      initialRegion={initialLatlng}
-    >
+    <MapView style={styles.mapStyle} initialRegion={initialLatlng}>
       {marker}
     </MapView>
   );
@@ -77,9 +74,6 @@ const Map = props => {
 const styles = StyleSheet.create({
   mapStyle: {
     flex: 1
-
-    /* width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height  */
   }
 });
 

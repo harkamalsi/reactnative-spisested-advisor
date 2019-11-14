@@ -1,13 +1,13 @@
-import React from "react";
-import { createAppContainer } from "react-navigation";
-import { createBottomTabNavigator } from "react-navigation-tabs";
-import { createStackNavigator } from "react-navigation-stack";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import React from 'react';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createStackNavigator } from 'react-navigation-stack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import HomeScreen from "./src/screens/home/index.js";
-import ResultScreen from "./src/screens/result/index.js";
-import RatingsScreen from "./src/screens/favourites/index.js";
-import DetailScreen from "./src/screens/detail/index.js";
+import HomeScreen from './src/screens/home/index.js';
+import ResultScreen from './src/screens/result/index.js';
+import RatingsScreen from './src/screens/favourites/index.js';
+import DetailScreen from './src/screens/detail/index.js';
 
 //Stacks for tab elements
 const SearchStack = createStackNavigator(
@@ -21,27 +21,27 @@ const SearchStack = createStackNavigator(
     Result: {
       screen: ResultScreen,
       navigationOptions: {
-        title: "Search Results"
+        title: 'Search Results'
       }
     },
     Detail: {
       screen: DetailScreen,
       navigationOptions: {
-        title: "Detailed View"
+        title: 'Detailed View'
       }
     }
   },
   {
-    initialRouteName: "Search",
+    initialRouteName: 'Search',
 
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#16a45f",
-        textAlign: "center"
+        backgroundColor: '#16a45f',
+        textAlign: 'center'
       },
-      headerTintColor: "#fff",
+      headerTintColor: '#fff',
       headerTitleStyle: {
-        fontWeight: "bold"
+        fontWeight: 'bold'
       }
     }
   }
@@ -51,27 +51,27 @@ const RatingsStack = createStackNavigator(
     Ratings: {
       screen: RatingsScreen,
       navigationOptions: {
-        title: "My Ratings"
+        title: 'My Ratings'
       }
     },
     Detail: {
       screen: DetailScreen,
       navigationOptions: {
-        title: "Detailed View"
+        title: 'Detailed View'
       }
     }
   },
   {
-    initialRouteName: "Ratings",
+    initialRouteName: 'Ratings',
 
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#16a45f",
-        textAlign: "center"
+        backgroundColor: '#16a45f',
+        textAlign: 'center'
       },
-      headerTintColor: "#fff",
+      headerTintColor: '#fff',
       headerTitleStyle: {
-        fontWeight: "bold"
+        fontWeight: 'bold'
       }
     }
   }
@@ -82,11 +82,11 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   let IconComponent = Ionicons;
   let iconName;
   switch (routeName) {
-    case "Search":
-      iconName = "ios-search";
+    case 'Search':
+      iconName = 'ios-search';
       break;
-    case "Ratings":
-      iconName = "ios-star-outline";
+    case 'Ratings':
+      iconName = 'ios-star-outline';
       break;
   }
   return <IconComponent name={iconName} size={25} color={tintColor} />;
@@ -99,7 +99,7 @@ export default createAppContainer(
       Ratings: {
         screen: RatingsStack,
         navigationOptions: {
-          tabBarLabel: "My Ratings"
+          tabBarLabel: 'My Ratings'
         }
       }
     },
@@ -109,8 +109,8 @@ export default createAppContainer(
           getTabBarIcon(navigation, focused, tintColor)
       }),
       tabBarOptions: {
-        activeTintColor: "#16a45f",
-        inactiveTintColor: "gray"
+        activeTintColor: '#16a45f',
+        inactiveTintColor: 'gray'
       }
     }
   )

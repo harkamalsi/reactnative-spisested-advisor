@@ -10,25 +10,72 @@ import FavouritesScreen from "./src/screens/favourites/index.js";
 import DetailScreen from "./src/screens/detail/index.js";
 
 //Stacks for tab elements
-const SearchStack = createStackNavigator({
-  Search: {
-    screen: HomeScreen,
-    navigationOptions: {
-      header: null
+const SearchStack = createStackNavigator(
+  {
+    Search: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Result: {
+      screen: ResultScreen,
+      navigationOptions: {
+        title: "Search Results"
+      }
+    },
+    Detail: {
+      screen: DetailScreen,
+      navigationOptions: {
+        title: "Detailed View"
+      }
     }
   },
-  Result: { screen: ResultScreen },
-  Detail: { screen: DetailScreen }
-});
-const FavouritesStack = createStackNavigator({
-  Favourites: {
-    screen: FavouritesScreen,
-    navigationOptions: {
-      header: null
+  {
+    initialRouteName: "Search",
+
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "#16a45f",
+        textAlign: "center"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
+const FavouritesStack = createStackNavigator(
+  {
+    Favourites: {
+      screen: FavouritesScreen,
+      navigationOptions: {
+        title: "My Ratings"
+      }
+    },
+    Detail: {
+      screen: DetailScreen,
+      navigationOptions: {
+        title: "Detailed View"
+      }
     }
   },
-  Detail: { screen: DetailScreen }
-});
+  {
+    initialRouteName: "Favourites",
+
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "#16a45f",
+        textAlign: "center"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
 //Return an Icon component specific for each tab
 const getTabBarIcon = (navigation, focused, tintColor) => {
   const { routeName } = navigation.state;
@@ -57,7 +104,7 @@ export default createAppContainer(
           getTabBarIcon(navigation, focused, tintColor)
       }),
       tabBarOptions: {
-        activeTintColor: "#66bdff",
+        activeTintColor: "#16a45f",
         inactiveTintColor: "gray"
       }
     }

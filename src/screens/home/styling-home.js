@@ -26,7 +26,7 @@ export default StyleSheet.create({
   },
   Selector: {
     borderRadius: 5,
-    height: 20,
+    // height: 20,
     backgroundColor: "white"
   },
   InputSelector: {
@@ -42,5 +42,8 @@ export default StyleSheet.create({
     marginTop: 30,
     fontWeight: "600",
     color: "#404241"
+  },
+  inputText: {
+    fontWeight: "600"
   }
 });

@@ -5,16 +5,16 @@ import { Input } from "react-native-elements";
 import Select2 from "react-native-select-two";
 
 const smileyAlternatives = [
-  { id: "0", name: "Smil" },
-  { id: "2", name: "Nøytral" },
-  { id: "3", name: "Sur" }
+  { id: "0", name: "Happy" },
+  { id: "2", name: "Neutral" },
+  { id: "3", name: "Sad" }
 ];
 
 const orderAlternative = [
-  { id: "NAME_AZ", name: "Navn A-Å", checked: true },
-  { id: "NAME_ZA", name: "Navn Å-A" },
-  { id: "SMILEY_DESC", name: "Fjes Glad-Sur" },
-  { id: "SMILEY_ASC", name: "Fjes Sur-Glad" }
+  { id: "NAME_AZ", name: "Name A-Å", checked: true },
+  { id: "NAME_ZA", name: "Name Å-A" },
+  { id: "SMILEY_DESC", name: "Smiley Happy-Sad" },
+  { id: "SMILEY_ASC", name: "Smiley Sad-Happy" }
 ];
 const HomeScreen = props => {
   //Here are the possible options for the 3 selectors. Unfortunately it had to be
@@ -74,21 +74,23 @@ const HomeScreen = props => {
       );
   }, []);
 
+  const colorTheme = "#16a45f"
+
   return (
     <View style={{ justifyContent: "flex-start", alignItems: "center" }}>
-      <Text style={{ fontSize: 20 }}>Søk etter spisesteder</Text>
-      <Input placeholder="Navn" onChangeText={text => setName(text)} />
+      <Text style={{ fontSize: 20 }}>Search after eateries</Text>
+      <Input placeholder="Name" onChangeText={text => setName(text)} />
       <Select2
         isSelectSingle
         style={{ borderRadius: 5 }}
         showSearchBox={false}
-        popupTitle="Velg en alternativ"
-        title="Sorter etter"
-        cancelButtonText="Avbryt"
-        selectButtonText="Velg"
-        searchPlaceHolderText="Søk etter en smilefjes"
-        listEmptyTitle="Ingen smilefjes med det navnet"
-        colorTheme="#16a45f"
+        popupTitle="Select an alternative"
+        title="Sort by"
+        cancelButtonText="Cancel"
+        selectButtonText="Select"
+        searchPlaceHolderText="Search after an smiley"
+        listEmptyTitle="No smileys with that name"
+        colorTheme={colorTheme}
         data={orderOptions}
         onSelect={data => {
           setOrderBy(data);
@@ -99,13 +101,13 @@ const HomeScreen = props => {
       />
       <Select2
         style={{ borderRadius: 5 }}
-        popupTitle="Velg en eller flere byer"
-        title="Filtrer etter by"
-        cancelButtonText="Avbryt"
-        selectButtonText="Velg"
-        searchPlaceHolderText="Søk etter en by"
-        listEmptyTitle="Ingen by med den navnet"
-        colorTheme="#16a45f"
+        popupTitle="Select one or more cities"
+        title="Filter by cities"
+        cancelButtonText="Cancel"
+        selectButtonText="Select"
+        searchPlaceHolderText="Search after a city"
+        listEmptyTitle="No city with that name"
+        colorTheme={colorTheme}
         data={cityOptions}
         onSelect={data => {
           updateSelectedCities(data);
@@ -117,13 +119,13 @@ const HomeScreen = props => {
       <Select2
         style={{ borderRadius: 5 }}
         showSearchBox={false}
-        popupTitle="Velg en eller flere smilefjes"
-        title="Filtrer etter smilefjes"
-        cancelButtonText="Avbryt"
-        selectButtonText="Velg"
-        searchPlaceHolderText="Søk etter en smilefjes"
-        listEmptyTitle="Ingen smilefjes med den navnet"
-        colorTheme="#16a45f"
+        popupTitle="Select one or more smileys"
+        title="Filter by smileys"
+        cancelButtonText="Cancel"
+        selectButtonText="Select"
+        searchPlaceHolderText="Search after a smiley"
+        listEmptyTitle="No smileys with that name"
+        colorTheme={colorTheme}
         data={smileyOptions}
         onSelect={data => {
           updateSelectedSmileys(data);

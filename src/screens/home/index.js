@@ -101,12 +101,12 @@ const HomeScreen = props => {
           isSelectSingle
           style={styles.Selector}
           showSearchBox={false}
-          popupTitle="Velg en alternativ"
-          title="Sorter etter"
-          cancelButtonText="Avbryt"
-          selectButtonText="Velg"
-          searchPlaceHolderText="Søk etter en smilefjes"
-          listEmptyTitle="Ingen smilefjes med det navnet"
+          popupTitle="Choose an option"
+          title="Order by"
+          cancelButtonText="Cancel"
+          selectButtonText="Choose"
+          searchPlaceHolderText="Search"
+          listEmptyTitle="Nothing"
           colorTheme="#16a45f"
           data={orderOptions}
           onSelect={data => {
@@ -120,12 +120,12 @@ const HomeScreen = props => {
 
         <Select2
           style={styles.Selector}
-          popupTitle="Velg en eller flere byer"
-          title="Filtrer etter by"
-          cancelButtonText="Avbryt"
-          selectButtonText="Velg"
-          searchPlaceHolderText="Søk etter en by"
-          listEmptyTitle="Ingen by med den navnet"
+          popupTitle="Choose one or more cities"
+          title="Filter by city"
+          cancelButtonText="Cancel"
+          selectButtonText="Choose"
+          searchPlaceHolderText="Search by city name"
+          listEmptyTitle="No city by that name"
           colorTheme="#16a45f"
           data={cityOptions}
           onSelect={data => {
@@ -135,17 +135,17 @@ const HomeScreen = props => {
             updateSelectedCities(data);
           }}
         />
-        <Text style={styles.inputText}>Filter by last smiley</Text>
+        <Text style={styles.inputText}>Filter by last Smiley</Text>
 
         <Select2
           style={styles.Selector}
           showSearchBox={false}
-          popupTitle="Velg en eller flere smilefjes"
-          title="Filtrer etter smilefjes"
-          cancelButtonText="Avbryt"
-          selectButtonText="Velg"
-          searchPlaceHolderText="Søk etter en smilefjes"
-          listEmptyTitle="Ingen smilefjes med den navnet"
+          popupTitle="Choose one or more Smileys"
+          title="Filter by Smileys"
+          cancelButtonText="Cancel"
+          selectButtonText="Choose"
+          searchPlaceHolderText="Search Smileys"
+          listEmptyTitle="Nothing"
           colorTheme="#16a45f"
           data={smileyOptions}
           onSelect={data => {

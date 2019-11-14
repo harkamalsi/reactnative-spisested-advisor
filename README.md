@@ -17,7 +17,6 @@ Husk du må være koblet til NTNU nett: enten være på campus eller bruke vpn.
 
 Videreføring av prosjekt 3 til mobilapp med react nativ. Prosjektet baserer seg på mattilsynets [smilefjesdatabase](https://data.norge.no/data/mattilsynet/smilefjestilsyn-p%C3%A5-serveringssteder), som inneholder alle restaurantinspeksjoner gjort av mattilsynet siden smilefjesordningens oppstart i 2016. Applikasjonen vår, som er en prototype i henhold til oppgavebeskrivelsen, gjør det mulig å søke gjennom denne databasen og få vist resultatet av søket i liste- og kartform. I tillegg er det mulig for brukerne av applikasjonen å gi deres egne vurderinger av restaurantene, fra 1-5 stjerner.
 
-Link til published expo project: --- insert link here ---
 Søkefunksjonen fungerer slik at man kan skrive fritekst for å søke på navnene til restaurantene. I tillegg har man ulike filtrering- og sorteringsmuligheter. Man kan velge å filtrere på by, her kan flere byer velges og man kan filtrere på fjes, feks kun sur fjes og nøytral fjes. Det  er også mulig å sorter søkeresultatet etter alfabetiskrekkefølge og etter smilefjesgrad. 
 
 
@@ -31,11 +30,11 @@ Dette prosjektet hadde ingen krav for testing, men vi har kontinuerlig testet ma
 ### Inspirasjon og kilder
 Backend koden er inspirert og delvis hentet fra: Carnes, Beau: Learn the MERN stack by building an exercise tracker — MERN Tutorial. Fra: https://medium.com/@beaucarnes/learn-the-mern-stack-by-building-an-exercise-tracker-mern-tutorial-59c13c1237a1. [15.10.2019]
 
-Fetching av data med react og redux er inspirert av guiden fra: Claus, Markus: Fetching data from an api using React/Redux. Fra: https://dev.to/markusclaus/fetching-data-from-an-api-using-reactredux-55ao [20.10.2019]
+Fetching av data med react er inspirert av guiden fra: Claus, Markus: Fetching data from an api using React/Redux. Fra: https://dev.to/markusclaus/fetching-data-from-an-api-using-reactredux-55ao [20.10.2019]
  
 
 ## Teknologi
-Teknologien baserer seg mye på arbeidet fra prosjekt 3, men den forskjellen er bruk av react-native istedenfor react. I tillegg har vi valgt å gå vekk fra redux, ettersom vi følte gjorde koden vår vanskelig å forstå og lese samtidig som redux ikke er helt nyttig i et så lite prosjekt der eneste states vi har er fetching av data.
+Teknologien baserer seg mye på arbeidet fra prosjekt 3, men den forskjellen er bruk av react-native istedenfor react. I tillegg har vi valgt å gå vekk fra redux, ettersom vi følte at det gjorde koden vår vanskelig å forstå og lese samtidig som redux ikke er helt nyttig i et så lite prosjekt der eneste states vi har er fetching av data.
 
 
 
@@ -46,16 +45,27 @@ Teknologien baserer seg mye på arbeidet fra prosjekt 3, men den forskjellen er 
 ### Express - REST API
 Backend av prosjektet er implementert ved hjelp av Express. Express er et Node.js web rammeverk. For at klienten og serveren skal kunne kommuniserer med hverandre har vi valgt å bruke REST APIs, og når de brukes sammen får vi en RESTful server. I Express settes det opp routes for å kunne bruke slike RESTful APIs. REST i seg selv er en protokoll som tar i bruk HTTP metoder for å kunne utføre CRUD operasjoner. CRUD operasjoner er create, read, update og delete operasjoner.
 
+#### Endepunkter
+| HTTP-METODE | ENDEPUNKT     | BESKRIVELSE |
+| ----------- | ------------- | ----------- |
+| GET         | /companies    | Søk etter bedrifter (restauranter)        |
+| GET         | /companies/?id=:id    | Hent en spesifikk bedrift (restaurant)        |
+| GET         | /companies/locations    | Henter navn og koordinater til alle bedrifter (restauranter)         |
+| GET         | /companies/cities    | Henter navn til alle steder        |
+| PUT         | /companies/giverating    | Gi rating til en spesifikk bedrift (restaurant). Id og stjerner gitt gis i body til request        | 
+
+Vi har valgt disse endepunktene fordi vi mener disse er naturlig og enkel å bruke. 
+
 ### MongoDB
 Gruppen tar i bruk MongoDB som er installert på den virtuelle maskinen. For å kunne hente nødvendig data må det gjøres spørringer til databasen. Disse inkluderer også pagination spørringer.
 
 ### AsyncStorage
-Gruppen har brukt AsyncStorage fra react-native og ikke react-native-community. Gruppen er klar over at AysyncStorage fra react-native library er deprecated, men det viser seg at det er kun denne som fungere med expo.
+Gruppen har brukt AsyncStorage fra react-native og ikke react-native-community. Gruppen er klar over at AysyncStorage fra react-native library er deprecated, men det viser seg at det er kun denne som fungere med expo cli. AsyncStorage brukes til å sette vurderinger gitt til hver enkel restaurant. Det sjekkes om det har blitt gitt vurdering til en spesifikk restaurant fra før av eller ikke, dersom det er gitt så gis det ikke vurdering på nytt. På denne måten unngår vi duplikater vurderinger. I denne prototypen har vi ikke implementert sletting av vurderinger, det vil si at etter det er gitt vurdering er det ikke mulig å oppdatere vurderingen. 
 
 ### Tredjepartskomponenter og APIer
 
 #### react-native-maps
-Det har vært mye fram og tilbake med map-komponenten. Først implementerte vi en kart som bruker tredjepartskompnenten react-native-webview-leaflet. Men ettersom dette ikke fungerte på android i development build av expo, gikk vi over til å bruke react-native-maps. Denne bruker mobiles innebyggde kart, som er Google Maps for android og Kart for iphone. Men utfordringen her er at Google Maps krever en api-key for å fungere, men slik det er nå fungerer den uten nøkkelen. Vi har gjort reaserch etter hvorfor det funger, men vi har ikke klart å funne noen begrunnelse. Derfor har vi valgt å fortsette å bruke react-native-maps.
+Det har vært mye fram og tilbake med map-komponenten. Først implementerte vi en kart som bruker tredjepartskompnenten react-native-webview-leaflet. Men ettersom dette ikke fungerte på android i development build av expo, gikk vi over til å bruke react-native-maps. Denne bruker mobilens innebyggde kart, som er Google Maps for android og Kart for iPhone. Men utfordringen her er at Google Maps krever en api-key for å fungere, men slik det er nå fungerer den uten nøkkelen. Vi har gjort reaserch etter hvorfor det fungerer uten api-key, men vi har ikke klart å funne noen begrunnelse. Derfor har vi valgt å fortsette å bruke react-native-maps.
 
 #### Mongoose 
 Mongoose er en library for MongoDB og Nodejs som gjør det enklere å kunne jobbe med MongoDB. Vi har brukt mongoose for å definere Schemas, noe som hjelper med å definere spesifikke strukturer med forhandsdefinerte data types for dokumenter som hentes og gis til MongoDB. I dette prosjektet brukes det også Validation gjennom mongoose for å kunne validere data typer. Mongoose gjør det også generelt mye enklere å kunne holde Schemas konsistent når det gjøres operasjoner på databasen (MongoDB). 

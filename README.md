@@ -5,15 +5,13 @@ Andreas Rimolsrønning, Emanuele Caprioli, Harkamaljit Singh
 ## Spisested Advisor
 
 ### Hvordan installere og kjøre applikasjonen
+Husk du må være koblet til NTNU nett: enten være på campus eller bruke vpn. 
 *   Først må prosjektet klones. Tast følgende i terminalen for å klone prosjektet: `git clone https://gitlab.stud.idi.ntnu.no/IT2810-H19/teams/team-2/project-4.git`
 *   Gå deretter inn i den klonede mappen ved å skrive følgende i terminalen: `cd project-4`
 *   Istaller [Expo](https://expo.io/learn): `npm install expo-cli --global`
-*   Installer nødvendige filer:
-    * I den klonede mappen tast følgende: `npm install`
-    * Tilslutt tast følgende kommando i terminalen, uavhengig av hvilken mappe du befinner deg i: `npm install -g nodemon concurrently` 
+*   Installer nødvendige filer: I den klonede mappen tast følgende: `npm install`
 *   For å starte applikasjonen, bruk kommandoen: `expo start`
 
-Husk du må være koblet til NTNU nett: enten være på campus eller bruke vpn. 
 
 ### Funksjonalitet og innhold
 
@@ -23,52 +21,50 @@ Link til published expo project: --- insert link here ---
 Søkefunksjonen fungerer slik at man kan skrive fritekst for å søke på navnene til restaurantene. I tillegg har man ulike filtrering- og sorteringsmuligheter. Man kan velge å filtrere på by, her kan flere byer velges og man kan filtrere på fjes, feks kun sur fjes og nøytral fjes. Det  er også mulig å sorter søkeresultatet etter alfabetiskrekkefølge og etter smilefjesgrad. 
 
 
-## Datasett
+### Datasett
 Datasettet er hentet fra [mattilsynet](https://data.norge.no/data/mattilsynet/smilefjestilsyn-p%C3%A5-serveringssteder). Denne har vi tilpasset til vår prototype ved å bruke et pythonscript. Ettersom adressene til restaurantene i datasettet ikke helt stemmer med de fysiske adressene (feks vegen istedenfor veien), ble det utfordrende å finne koordinater til alle restauranter. Derfor er det ikke alle restauranter som har koordinater i datasettet. 
 ![datasett](/uploads/aefe229a0435c1b1c212c63661759990/datasett.png)
 
-## Testing
+### Testing
+Dette prosjektet hadde ingen krav for testing, men vi har kontinuerlig testet manuelt under utviklingen, og sørget for at alt fungerte slik det skal, før vi pushet til dev.
 
-I tillegg har vi kontinuerlig testet manuelt under utviklingen, og sørget for at alt fungerte slik det skal, før vi pushet til dev.
-
-## Inspirasjon og kilder
+### Inspirasjon og kilder
 Backend koden er inspirert og delvis hentet fra: Carnes, Beau: Learn the MERN stack by building an exercise tracker — MERN Tutorial. Fra: https://medium.com/@beaucarnes/learn-the-mern-stack-by-building-an-exercise-tracker-mern-tutorial-59c13c1237a1. [15.10.2019]
 
 Fetching av data med react og redux er inspirert av guiden fra: Claus, Markus: Fetching data from an api using React/Redux. Fra: https://dev.to/markusclaus/fetching-data-from-an-api-using-reactredux-55ao [20.10.2019]
  
 
-### Teknologi
+## Teknologi
 Teknologien baserer seg mye på arbeidet fra prosjekt 3, men den forskjellen er bruk av react-native istedenfor react. I tillegg har vi valgt å gå vekk fra redux, ettersom vi følte gjorde koden vår vanskelig å forstå og lese samtidig som redux ikke er helt nyttig i et så lite prosjekt der eneste states vi har er fetching av data.
 
 
 
-#### React-Native
+### React-Native
 
 
 
-#### Express - REST API
+### Express - REST API
 Backend av prosjektet er implementert ved hjelp av Express. Express er et Node.js web rammeverk. For at klienten og serveren skal kunne kommuniserer med hverandre har vi valgt å bruke REST APIs, og når de brukes sammen får vi en RESTful server. I Express settes det opp routes for å kunne bruke slike RESTful APIs. REST i seg selv er en protokoll som tar i bruk HTTP metoder for å kunne utføre CRUD operasjoner. CRUD operasjoner er create, read, update og delete operasjoner.
 
-#### MongoDB
+### MongoDB
 Gruppen tar i bruk MongoDB som er installert på den virtuelle maskinen. For å kunne hente nødvendig data må det gjøres spørringer til databasen. Disse inkluderer også pagination spørringer.
 
-#### AsyncStorage
+### AsyncStorage
 Gruppen har brukt AsyncStorage fra react-native og ikke react-native-community. Gruppen er klar over at AysyncStorage fra react-native library er deprecated, men det viser seg at det er kun denne som fungere med expo.
 
-## Tredjepartskomponenter
+### Tredjepartskomponenter og APIer
 
-## Leaflet
-For kartet brukes biblioteket [leaflet](https://leafletjs.com/), mens kart data blir hentet fra [Open street Map](https://www.openstreetmap.org/). Tredjepartkomponenten [react-leaflet](https://react-leaflet.js.org/) brukes til å  gjøre leaflet til en react komponent. For gruppering av markers, brukes [react-leaflet-markercluser](https://www.npmjs.com/package/react-leaflet-markercluster)
-For å mappe restaurantadresser (geocoding), har vi brukt apiet fra [nominatim](https://nominatim.org).
-
-## react-native-maps
+#### react-native-maps
 Det har vært mye fram og tilbake med map-komponenten. Først implementerte vi en kart som bruker tredjepartskompnenten react-native-webview-leaflet. Men ettersom dette ikke fungerte på android i development build av expo, gikk vi over til å bruke react-native-maps. Denne bruker mobiles innebyggde kart, som er Google Maps for android og Kart for iphone. Men utfordringen her er at Google Maps krever en api-key for å fungere, men slik det er nå fungerer den uten nøkkelen. Vi har gjort reaserch etter hvorfor det funger, men vi har ikke klart å funne noen begrunnelse. Derfor har vi valgt å fortsette å bruke react-native-maps.
 
-## Mongoose 
+#### Mongoose 
 Mongoose er en library for MongoDB og Nodejs som gjør det enklere å kunne jobbe med MongoDB. Vi har brukt mongoose for å definere Schemas, noe som hjelper med å definere spesifikke strukturer med forhandsdefinerte data types for dokumenter som hentes og gis til MongoDB. I dette prosjektet brukes det også Validation gjennom mongoose for å kunne validere data typer. Mongoose gjør det også generelt mye enklere å kunne holde Schemas konsistent når det gjøres operasjoner på databasen (MongoDB). 
 
 #### React Star Component
 React start komponent er rendered under hver List row komponent for å kunne gi vurdering for en gitt restaurant.
+
+#### Nominatim
+For å mappe restaurantadresser (geocoding), har vi brukt apiet fra [nominatim](https://nominatim.org).
 
 ## React komponentstruktur
 

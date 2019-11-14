@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, ImageBackground } from "react-native";
 import { Button } from "react-native-elements";
 import { Input } from "react-native-elements";
 import Select2 from "react-native-select-two";
+import styles from "./styling-home";
 
 const smileyAlternatives = [
   { id: "0", name: "Smil" },
@@ -76,63 +77,69 @@ const HomeScreen = props => {
 
   return (
     <View style={{ justifyContent: "flex-start", alignItems: "center" }}>
-      <Text style={{ fontSize: 20 }}>Søk etter spisesteder</Text>
-      <Input placeholder="Navn" onChangeText={text => setName(text)} />
-      <Select2
-        isSelectSingle
-        style={{ borderRadius: 5 }}
-        showSearchBox={false}
-        popupTitle="Velg en alternativ"
-        title="Sorter etter"
-        cancelButtonText="Avbryt"
-        selectButtonText="Velg"
-        searchPlaceHolderText="Søk etter en smilefjes"
-        listEmptyTitle="Ingen smilefjes med det navnet"
-        colorTheme="#16a45f"
-        data={orderOptions}
-        onSelect={data => {
-          setOrderBy(data);
-        }}
-        onRemoveItem={data => {
-          setOrderBy(data);
-        }}
-      />
-      <Select2
-        style={{ borderRadius: 5 }}
-        popupTitle="Velg en eller flere byer"
-        title="Filtrer etter by"
-        cancelButtonText="Avbryt"
-        selectButtonText="Velg"
-        searchPlaceHolderText="Søk etter en by"
-        listEmptyTitle="Ingen by med den navnet"
-        colorTheme="#16a45f"
-        data={cityOptions}
-        onSelect={data => {
-          updateSelectedCities(data);
-        }}
-        onRemoveItem={data => {
-          updateSelectedCities(data);
-        }}
-      />
-      <Select2
-        style={{ borderRadius: 5 }}
-        showSearchBox={false}
-        popupTitle="Velg en eller flere smilefjes"
-        title="Filtrer etter smilefjes"
-        cancelButtonText="Avbryt"
-        selectButtonText="Velg"
-        searchPlaceHolderText="Søk etter en smilefjes"
-        listEmptyTitle="Ingen smilefjes med den navnet"
-        colorTheme="#16a45f"
-        data={smileyOptions}
-        onSelect={data => {
-          updateSelectedSmileys(data);
-        }}
-        onRemoveItem={data => {
-          updateSelectedSmileys(data);
-        }}
-      />
-      <Button title="Search!" onPress={handleOnPress.bind(this)} />
+      <ImageBackground
+        source={require("./restaurant-background.jpg")}
+        style={styles.Background}
+        imageStyle={styles.BackgroundPicture}
+      >
+        <Text style={{ fontSize: 20 }}>Søk etter spisesteder</Text>
+        <Input placeholder="Navn" onChangeText={text => setName(text)} />
+        <Select2
+          isSelectSingle
+          style={{ borderRadius: 5 }}
+          showSearchBox={false}
+          popupTitle="Velg en alternativ"
+          title="Sorter etter"
+          cancelButtonText="Avbryt"
+          selectButtonText="Velg"
+          searchPlaceHolderText="Søk etter en smilefjes"
+          listEmptyTitle="Ingen smilefjes med det navnet"
+          colorTheme="#16a45f"
+          data={orderOptions}
+          onSelect={data => {
+            setOrderBy(data);
+          }}
+          onRemoveItem={data => {
+            setOrderBy(data);
+          }}
+        />
+        <Select2
+          style={{ borderRadius: 5 }}
+          popupTitle="Velg en eller flere byer"
+          title="Filtrer etter by"
+          cancelButtonText="Avbryt"
+          selectButtonText="Velg"
+          searchPlaceHolderText="Søk etter en by"
+          listEmptyTitle="Ingen by med den navnet"
+          colorTheme="#16a45f"
+          data={cityOptions}
+          onSelect={data => {
+            updateSelectedCities(data);
+          }}
+          onRemoveItem={data => {
+            updateSelectedCities(data);
+          }}
+        />
+        <Select2
+          style={{ borderRadius: 5 }}
+          showSearchBox={false}
+          popupTitle="Velg en eller flere smilefjes"
+          title="Filtrer etter smilefjes"
+          cancelButtonText="Avbryt"
+          selectButtonText="Velg"
+          searchPlaceHolderText="Søk etter en smilefjes"
+          listEmptyTitle="Ingen smilefjes med den navnet"
+          colorTheme="#16a45f"
+          data={smileyOptions}
+          onSelect={data => {
+            updateSelectedSmileys(data);
+          }}
+          onRemoveItem={data => {
+            updateSelectedSmileys(data);
+          }}
+        />
+        <Button title="Search!" onPress={handleOnPress.bind(this)} />
+      </ImageBackground>
     </View>
   );
 };

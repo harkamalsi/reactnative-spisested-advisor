@@ -4,6 +4,7 @@ import List from "../../components/List/List";
 
 const ResultScreen = props => {
   const [restaurants, setRestaurant] = useState([]);
+  let [noSearchMatch, setSearchMatch] = useState(false);
   const [page, setPage] = useState(0);
   const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/";
   let query = props.navigation.getParam("query", "NO-QUERY");
@@ -20,12 +21,17 @@ const ResultScreen = props => {
         if (res.error) {
           throw res.error;
         }
-        let tmp = [...restaurants];
-        res.map(restaurant => {
-          tmp.push(restaurant);
-        });
-        setRestaurant(tmp);
-        setPage(page + 1);
+        console.log(res.length === 0);
+        if (res.length === 0) {
+          setSearchMatch(true);
+        } else {
+          let tmp = [...restaurants];
+          res.map(restaurant => {
+            tmp.push(restaurant);
+          });
+          setRestaurant(tmp);
+          setPage(page + 1);
+        }
       });
   };
 
@@ -62,9 +68,15 @@ const ResultScreen = props => {
     //Fetch restaurants matching query
     fetchRestaurants();
   }, []);
-  console.log("rendering list....");
-  if (restaurants.length === 0) return <Text>Loading...</Text>;
-  else
+  if (noSearchMatch) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ fontSize: 20 }}>
+          No eateries matched your search.{"\n"}Try broadening the search
+        </Text>
+      </View>
+    );
+  } else
     return (
       <View style={{ flex: 1 }}>
         <List

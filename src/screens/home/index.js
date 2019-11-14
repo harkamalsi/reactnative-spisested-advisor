@@ -90,7 +90,7 @@ const HomeScreen = props => {
         <Text style={styles.inputText}>Search by name</Text>
 
         <Input
-          placeholder="Navn"
+          placeholder="McDonald"
           inputStyle={styles.Selector}
           containerStyle={{
             paddingHorizontal: 0
@@ -123,7 +123,7 @@ const HomeScreen = props => {
         <Select2
           style={styles.Selector}
           popupTitle="Choose one or more cities"
-          title="Filter by city"
+          title="Oslo"
           cancelButtonText="Cancel"
           selectButtonText="Choose"
           searchPlaceHolderText="Search by city name"
@@ -143,7 +143,7 @@ const HomeScreen = props => {
           style={styles.Selector}
           showSearchBox={false}
           popupTitle="Choose one or more Smileys"
-          title="Filter by Smileys"
+          title="Happy"
           cancelButtonText="Cancel"
           selectButtonText="Choose"
           searchPlaceHolderText="Search Smileys"

@@ -6,16 +6,16 @@ import Select2 from "react-native-select-two";
 import styles from "./styling-home";
 
 const smileyAlternatives = [
-  { id: "0", name: "Smil" },
-  { id: "2", name: "Nøytral" },
-  { id: "3", name: "Sur" }
+  { id: "0", name: "Happy" },
+  { id: "2", name: "Neutral" },
+  { id: "3", name: "Sad" }
 ];
 
 const orderAlternative = [
-  { id: "NAME_AZ", name: "Navn A-Å", checked: true },
-  { id: "NAME_ZA", name: "Navn Å-A" },
-  { id: "SMILEY_DESC", name: "Fjes Glad-Sur" },
-  { id: "SMILEY_ASC", name: "Fjes Sur-Glad" }
+  { id: "NAME_AZ", name: "Name A-Z", checked: true },
+  { id: "NAME_ZA", name: "Name Z-A" },
+  { id: "SMILEY_DESC", name: "Smiley Happy-Sad" },
+  { id: "SMILEY_ASC", name: "Smiley Sad-Happy" }
 ];
 const HomeScreen = props => {
   //Here are the possible options for the 3 selectors. Unfortunately it had to be
@@ -74,6 +74,8 @@ const HomeScreen = props => {
         }
       );
   }, []);
+
+  const colorTheme = "#16a45f";
 
   return (
     <ImageBackground

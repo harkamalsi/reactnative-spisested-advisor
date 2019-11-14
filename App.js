@@ -6,7 +6,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import HomeScreen from "./src/screens/home/index.js";
 import ResultScreen from "./src/screens/result/index.js";
-import FavouritesScreen from "./src/screens/favourites/index.js";
+import RatingsScreen from "./src/screens/favourites/index.js";
 import DetailScreen from "./src/screens/detail/index.js";
 
 //Stacks for tab elements
@@ -46,10 +46,10 @@ const SearchStack = createStackNavigator(
     }
   }
 );
-const FavouritesStack = createStackNavigator(
+const RatingsStack = createStackNavigator(
   {
-    Favourites: {
-      screen: FavouritesScreen,
+    Ratings: {
+      screen: RatingsScreen,
       navigationOptions: {
         title: "My Ratings"
       }
@@ -62,7 +62,7 @@ const FavouritesStack = createStackNavigator(
     }
   },
   {
-    initialRouteName: "Favourites",
+    initialRouteName: "Ratings",
 
     defaultNavigationOptions: {
       headerStyle: {
@@ -85,7 +85,7 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
     case "Search":
       iconName = "ios-search";
       break;
-    case "Favourites":
+    case "Ratings":
       iconName = "ios-star-outline";
       break;
   }
@@ -96,8 +96,8 @@ export default createAppContainer(
   createBottomTabNavigator(
     {
       Search: { screen: SearchStack },
-      Favourites: {
-        screen: FavouritesStack,
+      Ratings: {
+        screen: RatingsStack,
         navigationOptions: {
           tabBarLabel: "My Ratings"
         }

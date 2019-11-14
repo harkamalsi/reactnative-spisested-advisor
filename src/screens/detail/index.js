@@ -164,12 +164,12 @@ const DetailScreen = props => {
   if (restaurant !== null) {
     let textRating =
       restaurant.sumStars === 0
-        ? "No Rating yet"
+        ? "No ratings"
         : "Rating: " +
           (restaurant.sumStars / restaurant.numberOfRatings)
             .toFixed(2)
             .toString();
-    let textStar = !starGiven ? "Gi en vurdering :" : "Din vurdering:";
+    let textStar = !starGiven ? "Leave a rating:" : "Your rating:";
     //Get the height of the devices screen
     const screenHeight = Math.round(Dimensions.get("window").height);
     let smileys = formatSmileys(restaurant.smileys);

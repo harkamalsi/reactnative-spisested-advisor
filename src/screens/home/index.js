@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, ImageBackground, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { Input } from "react-native-elements";
 import Select2 from "react-native-select-two";
+import styles from "./styling-home";
 
 const smileyAlternatives = [
   { id: "0", name: "Happy" },
@@ -11,8 +12,8 @@ const smileyAlternatives = [
 ];
 
 const orderAlternative = [
-  { id: "NAME_AZ", name: "Name A-Å", checked: true },
-  { id: "NAME_ZA", name: "Name Å-A" },
+  { id: "NAME_AZ", name: "Name A-Z", checked: true },
+  { id: "NAME_ZA", name: "Name Z-A" },
   { id: "SMILEY_DESC", name: "Smiley Happy-Sad" },
   { id: "SMILEY_ASC", name: "Smiley Sad-Happy" }
 ];
@@ -74,68 +75,97 @@ const HomeScreen = props => {
       );
   }, []);
 
-  const colorTheme = "#16a45f"
+  const colorTheme = "#16a45f";
 
   return (
-    <View style={{ justifyContent: "flex-start", alignItems: "center" }}>
-      <Text style={{ fontSize: 20 }}>Search after eateries</Text>
-      <Input placeholder="Name" onChangeText={text => setName(text)} />
-      <Select2
-        isSelectSingle
-        style={{ borderRadius: 5 }}
-        showSearchBox={false}
-        popupTitle="Select an alternative"
-        title="Sort by"
-        cancelButtonText="Cancel"
-        selectButtonText="Select"
-        searchPlaceHolderText="Search after an smiley"
-        listEmptyTitle="No smileys with that name"
-        colorTheme={colorTheme}
-        data={orderOptions}
-        onSelect={data => {
-          setOrderBy(data);
-        }}
-        onRemoveItem={data => {
-          setOrderBy(data);
-        }}
-      />
-      <Select2
-        style={{ borderRadius: 5 }}
-        popupTitle="Select one or more cities"
-        title="Filter by cities"
-        cancelButtonText="Cancel"
-        selectButtonText="Select"
-        searchPlaceHolderText="Search after a city"
-        listEmptyTitle="No city with that name"
-        colorTheme={colorTheme}
-        data={cityOptions}
-        onSelect={data => {
-          updateSelectedCities(data);
-        }}
-        onRemoveItem={data => {
-          updateSelectedCities(data);
-        }}
-      />
-      <Select2
-        style={{ borderRadius: 5 }}
-        showSearchBox={false}
-        popupTitle="Select one or more smileys"
-        title="Filter by smileys"
-        cancelButtonText="Cancel"
-        selectButtonText="Select"
-        searchPlaceHolderText="Search after a smiley"
-        listEmptyTitle="No smileys with that name"
-        colorTheme={colorTheme}
-        data={smileyOptions}
-        onSelect={data => {
-          updateSelectedSmileys(data);
-        }}
-        onRemoveItem={data => {
-          updateSelectedSmileys(data);
-        }}
-      />
-      <Button title="Search!" onPress={handleOnPress.bind(this)} />
-    </View>
+    <ImageBackground
+      source={require("./restaurant-background.jpg")}
+      style={styles.Container}
+      imageStyle={styles.BackgroundPicture}
+    >
+      <View style={styles.TitleBox}>
+        <Text style={styles.Title}>Spisested Adviser</Text>
+      </View>
+      <View style={styles.SelectorGroup}>
+        <Text style={styles.inputText}>Search by name</Text>
+
+        <Input
+          placeholder="Navn"
+          inputStyle={styles.Selector}
+          containerStyle={{
+            paddingHorizontal: 0
+          }}
+          onChangeText={text => setName(text)}
+        />
+        <Text style={styles.inputText}>Order by:</Text>
+
+        <Select2
+          isSelectSingle
+          style={styles.Selector}
+          showSearchBox={false}
+          popupTitle="Choose an option"
+          title="Order by"
+          cancelButtonText="Cancel"
+          selectButtonText="Choose"
+          searchPlaceHolderText="Search"
+          listEmptyTitle="Nothing"
+          colorTheme="#16a45f"
+          data={orderOptions}
+          onSelect={data => {
+            setOrderBy(data);
+          }}
+          onRemoveItem={data => {
+            setOrderBy(data);
+          }}
+        />
+        <Text style={styles.inputText}>Filter by city</Text>
+
+        <Select2
+          style={styles.Selector}
+          popupTitle="Choose one or more cities"
+          title="Filter by city"
+          cancelButtonText="Cancel"
+          selectButtonText="Choose"
+          searchPlaceHolderText="Search by city name"
+          listEmptyTitle="No city by that name"
+          colorTheme="#16a45f"
+          data={cityOptions}
+          onSelect={data => {
+            updateSelectedCities(data);
+          }}
+          onRemoveItem={data => {
+            updateSelectedCities(data);
+          }}
+        />
+        <Text style={styles.inputText}>Filter by last Smiley</Text>
+
+        <Select2
+          style={styles.Selector}
+          showSearchBox={false}
+          popupTitle="Choose one or more Smileys"
+          title="Filter by Smileys"
+          cancelButtonText="Cancel"
+          selectButtonText="Choose"
+          searchPlaceHolderText="Search Smileys"
+          listEmptyTitle="Nothing"
+          colorTheme="#16a45f"
+          data={smileyOptions}
+          onSelect={data => {
+            updateSelectedSmileys(data);
+          }}
+          onRemoveItem={data => {
+            updateSelectedSmileys(data);
+          }}
+        />
+      </View>
+      <View style={styles.ButtonBox}>
+        <Button
+          title="Search!"
+          buttonStyle={styles.Button}
+          onPress={handleOnPress.bind(this)}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 

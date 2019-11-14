@@ -20,13 +20,29 @@ const Smiley = props => {
   let value = props.value;
   let pic = null;
   if (value === 0 || value === 1)
-    pic = <Image style={styles.Image} source={require("./smiley-happy.png")} />;
+    pic = (
+      <Image
+        style={styles.Image}
+        resizeMode="contain"
+        source={require("./smiley-happy.png")}
+      />
+    );
   else if (value === 2)
     pic = (
-      <Image style={styles.Image} source={require("./smiley-neutral.png")} />
+      <Image
+        style={styles.Image}
+        resizeMode="contain"
+        source={require("./smiley-neutral.png")}
+      />
     );
   else if (value === 3)
-    pic = <Image style={styles.Image} source={require("./smiley-sad.png")} />;
+    pic = (
+      <Image
+        style={styles.Image}
+        resizeMode="contain"
+        source={require("./smiley-sad.png")}
+      />
+    );
   else pic = <div>Ikke</div>;
   return (
     <View>

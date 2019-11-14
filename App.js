@@ -10,15 +10,72 @@ import RatingsScreen from "./src/screens/favourites/index.js";
 import DetailScreen from "./src/screens/detail/index.js";
 
 //Stacks for tab elements
-const SearchStack = createStackNavigator({
-  Search: { screen: HomeScreen },
-  Result: { screen: ResultScreen },
-  Detail: { screen: DetailScreen }
-});
-const RatingsStack = createStackNavigator({
-  Ratings: { screen: RatingsScreen },
-  Detail: { screen: DetailScreen }
-});
+const SearchStack = createStackNavigator(
+  {
+    Search: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Result: {
+      screen: ResultScreen,
+      navigationOptions: {
+        title: "Search Results"
+      }
+    },
+    Detail: {
+      screen: DetailScreen,
+      navigationOptions: {
+        title: "Detailed View"
+      }
+    }
+  },
+  {
+    initialRouteName: "Search",
+
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "#16a45f",
+        textAlign: "center"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
+const RatingsStack = createStackNavigator(
+  {
+    Ratings: {
+      screen: RatingsScreen,
+      navigationOptions: {
+        title: "My Ratings"
+      }
+    },
+    Detail: {
+      screen: DetailScreen,
+      navigationOptions: {
+        title: "Detailed View"
+      }
+    }
+  },
+  {
+    initialRouteName: "Ratings",
+
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "#16a45f",
+        textAlign: "center"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
 //Return an Icon component specific for each tab
 const getTabBarIcon = (navigation, focused, tintColor) => {
   const { routeName } = navigation.state;
@@ -39,7 +96,12 @@ export default createAppContainer(
   createBottomTabNavigator(
     {
       Search: { screen: SearchStack },
-      Ratings: { screen: RatingsStack }
+      Ratings: {
+        screen: RatingsStack,
+        navigationOptions: {
+          tabBarLabel: "My Ratings"
+        }
+      }
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -47,7 +109,7 @@ export default createAppContainer(
           getTabBarIcon(navigation, focused, tintColor)
       }),
       tabBarOptions: {
-        activeTintColor: "#66bdff",
+        activeTintColor: "#16a45f",
         inactiveTintColor: "gray"
       }
     }

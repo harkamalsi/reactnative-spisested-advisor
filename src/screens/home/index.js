@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, ImageBackground } from "react-native";
+import { Text, View, ImageBackground, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { Input } from "react-native-elements";
 import Select2 from "react-native-select-two";
@@ -76,17 +76,30 @@ const HomeScreen = props => {
   }, []);
 
   return (
-    <View style={{ justifyContent: "flex-start", alignItems: "center" }}>
-      <ImageBackground
-        source={require("./restaurant-background.jpg")}
-        style={styles.Background}
-        imageStyle={styles.BackgroundPicture}
-      >
-        <Text style={{ fontSize: 20 }}>Søk etter spisesteder</Text>
-        <Input placeholder="Navn" onChangeText={text => setName(text)} />
+    <ImageBackground
+      source={require("./restaurant-background.jpg")}
+      style={styles.Container}
+      imageStyle={styles.BackgroundPicture}
+    >
+      <View style={styles.TitleBox}>
+        <Text style={styles.Title}>Spisested Adviser</Text>
+      </View>
+      <View style={styles.SelectorGroup}>
+        <Text style={styles.inputText}>Search by name</Text>
+
+        <Input
+          placeholder="Navn"
+          inputStyle={styles.Selector}
+          containerStyle={{
+            paddingHorizontal: 0
+          }}
+          onChangeText={text => setName(text)}
+        />
+        <Text style={styles.inputText}>Order by:</Text>
+
         <Select2
           isSelectSingle
-          style={{ borderRadius: 5 }}
+          style={styles.Selector}
           showSearchBox={false}
           popupTitle="Velg en alternativ"
           title="Sorter etter"
@@ -103,8 +116,10 @@ const HomeScreen = props => {
             setOrderBy(data);
           }}
         />
+        <Text style={styles.inputText}>Filter by city</Text>
+
         <Select2
-          style={{ borderRadius: 5 }}
+          style={styles.Selector}
           popupTitle="Velg en eller flere byer"
           title="Filtrer etter by"
           cancelButtonText="Avbryt"
@@ -120,8 +135,10 @@ const HomeScreen = props => {
             updateSelectedCities(data);
           }}
         />
+        <Text style={styles.inputText}>Filter by last smiley</Text>
+
         <Select2
-          style={{ borderRadius: 5 }}
+          style={styles.Selector}
           showSearchBox={false}
           popupTitle="Velg en eller flere smilefjes"
           title="Filtrer etter smilefjes"
@@ -138,9 +155,15 @@ const HomeScreen = props => {
             updateSelectedSmileys(data);
           }}
         />
-        <Button title="Search!" onPress={handleOnPress.bind(this)} />
-      </ImageBackground>
-    </View>
+      </View>
+      <View style={styles.ButtonBox}>
+        <Button
+          title="Search!"
+          buttonStyle={styles.Button}
+          onPress={handleOnPress.bind(this)}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 

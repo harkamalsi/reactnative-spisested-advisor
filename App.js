@@ -11,12 +11,22 @@ import DetailScreen from "./src/screens/detail/index.js";
 
 //Stacks for tab elements
 const SearchStack = createStackNavigator({
-  Search: { screen: HomeScreen },
+  Search: {
+    screen: HomeScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   Result: { screen: ResultScreen },
   Detail: { screen: DetailScreen }
 });
 const FavouritesStack = createStackNavigator({
-  Favourites: { screen: FavouritesScreen },
+  Favourites: {
+    screen: FavouritesScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   Detail: { screen: DetailScreen }
 });
 //Return an Icon component specific for each tab

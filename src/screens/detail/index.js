@@ -164,7 +164,7 @@ const DetailScreen = props => {
   if (restaurant !== null) {
     let textRating =
       restaurant.sumStars === 0
-        ? "No rating yet"
+        ? "No ratings"
         : "Rating: " +
           (restaurant.sumStars / restaurant.numberOfRatings)
             .toFixed(2)

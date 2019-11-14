@@ -25,7 +25,7 @@ const ListRow = props => {
   let row = props.rowData;
   let stars =
     row.numberOfRatings === 0
-      ? "No rating yet"
+      ? "No ratings"
       : (row.sumStars / row.numberOfRatings).toFixed(2).toString() + "/5";
 
   let pic = <Image style={styles.Star} source={require("./star.png")} />;

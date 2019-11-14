@@ -96,7 +96,12 @@ export default createAppContainer(
   createBottomTabNavigator(
     {
       Search: { screen: SearchStack },
-      Favourites: { screen: FavouritesStack }
+      Favourites: {
+        screen: FavouritesStack,
+        navigationOptions: {
+          tabBarLabel: "My Ratings"
+        }
+      }
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({

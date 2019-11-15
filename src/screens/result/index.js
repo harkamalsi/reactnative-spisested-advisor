@@ -21,7 +21,7 @@ const ResultScreen = props => {
         if (res.error) {
           throw res.error;
         }
-        if (res.length === 0) {
+        if (res.length === 0 && restaurants.length === 0) {
           setSearchMatch(true);
         } else {
           let tmp = [...restaurants];

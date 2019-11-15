@@ -90,7 +90,7 @@ const HomeScreen = props => {
         <Text style={styles.inputText}>Search by name</Text>
 
         <Input
-          placeholder='McDonald'
+          placeholder='e.g McDonald'
           inputStyle={styles.Selector}
           containerStyle={{
             paddingHorizontal: 0
@@ -109,7 +109,7 @@ const HomeScreen = props => {
           selectButtonText='Choose'
           searchPlaceHolderText='Search'
           listEmptyTitle='Nothing'
-          colorTheme='#16a45f'
+          colorTheme={colorTheme}
           data={orderOptions}
           onSelect={data => {
             setOrderBy(data);
@@ -123,12 +123,12 @@ const HomeScreen = props => {
         <Select2
           style={styles.Selector}
           popupTitle='Choose one or more cities'
-          title='Oslo'
+          title='e.g Oslo'
           cancelButtonText='Cancel'
           selectButtonText='Choose'
           searchPlaceHolderText='Search by city name'
           listEmptyTitle='No city by that name'
-          colorTheme='#16a45f'
+          colorTheme={colorTheme}
           data={cityOptions}
           onSelect={data => {
             updateSelectedCities(data);
@@ -143,12 +143,12 @@ const HomeScreen = props => {
           style={styles.Selector}
           showSearchBox={false}
           popupTitle='Choose one or more Smileys'
-          title='Happy'
+          title='e.g Happy'
           cancelButtonText='Cancel'
           selectButtonText='Choose'
           searchPlaceHolderText='Search Smileys'
           listEmptyTitle='Nothing'
-          colorTheme='#16a45f'
+          colorTheme={colorTheme}
           data={smileyOptions}
           onSelect={data => {
             updateSelectedSmileys(data);

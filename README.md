@@ -16,7 +16,7 @@ For å kjøre applikasjonen, må man være koblet til NTNU nettet: enten være p
 ### Hierarki diagram
 ![Hierarki](/uploads/481fcc15360fc945eeeec1dc4c747ebe/Hierarkki.PNG)
 
-### Funksjonalitet og innhold
+## Funksjonalitet og innhold
 
 Dette prosjektet er en videreføring av prosjekt 3. For dette prosjektet har vi laget en mobilapp med [React Native](https://facebook.github.io/react-native/). Prosjektet baserer seg på mattilsynets [smilefjesdatabase](https://data.norge.no/data/mattilsynet/smilefjestilsyn-p%C3%A5-serveringssteder), som inneholder alle restaurantinspeksjoner gjort av mattilsynet siden smilefjesordningens oppstart i 2016. Applikasjonen vår, som er en prototype i henhold til oppgavebeskrivelsen, gjør det mulig å søke gjennom denne databasen og få vist resultatet av søket i liste- og kartform. I tillegg er det mulig for brukerne av applikasjonen å gi deres egne vurderinger av restaurantene, fra 1-5 stjerner.
 
@@ -39,19 +39,28 @@ Backend til prosjektet er implementert ved hjelp av Express, som er et Node.js w
 ##### Endepunkter
 | HTTP-METODE | ENDEPUNKT     | BESKRIVELSE |
 | ----------- | ------------- | ----------- |
-| GET         | /companies    | Søk etter bedrifter (restauranter)        |
+| GET         | /companies    | Søk etter bedrifter (restauranter). Endepunktet bruker ulike parameter for å bygge en query, og de er listet under        |
 | GET         | /companies/?id=:id    | Hent en spesifikk bedrift (restaurant)        |
 | GET         | /companies/locations    | Henter navn og koordinater til alle bedrifter (restauranter)         |
 | GET         | /companies/cities    | Henter navn til alle steder        |
 | PUT         | /companies/giverating    | Gi rating til en spesifikk bedrift (restaurant). Id og stjerner gitt gis i body til request        | 
 
-Vi har valgt disse endepunktene fordi vi mener disse er naturlig og enkel å bruke. 
+###### Endepunkt: /companies
+| Query parameter | Format     | Beskrivelse |
+| ----------- | ------------- | ----------- |
+| name        | Fritekst    | Restaurant navn        | 
+| orderby     | NAME_AZ, NAME_ZA, <br> SMILEY_ASC, SMILEY_DESC    | Sortere etter kun en av mulige sorteringsmuligheter        | 
+| cities      | Bindestrek separert list med stedsnavn    | Stedsnavn         | 
+| smileys     | Bindestrek separert list med tall fra 0 til 4.<br> 0 og 1 er for smil, 2 er for nøytral og 3 er for sur fjes.    | Filtrere etter smileys som i databasen er representert med tall.        | 
+| page        | Tall (int)    | Sidenummer        | 
+
+Vi har valgt disse endepunktene fordi vi mener disse er naturlig og enkel å bruke. Første endepunkt brukes for selve resultatet, mens /locations og /cities brukes henholdsvis for citySelector- og map-komponent. En spesifikk restaurant med id som parameter endepunkt, /companies/?id=:id,  brukes for å hente mer informasjon om den (de) resturant(er) som er lagret med asyncstorage; det lagres ikke all data og derfor må vi hente mer data. Siste endepunkt brukes for å oppdatere vurderinger. Gruppen har valgt å bruke restAPI istedenfor graphql fordi gruppen hadde noe erfaring med det fra før, og ville fortsette å bruke det.
 
 ### MongoDB
-Applikasjonen bruker MongoDB fordi vi mente at MongoDB er svært nyttig å lære seg ettersom det blir mye brukt i dag, og at det er enkelt og raskt å komme i gang med. For å kunne hente nødvendig data, gjøres det spørringer til databasen. Disse inkluderer også pagination spørringer.
+Applikasjonen bruker MongoDB fordi vi mente at MongoDB er svært nyttig å lære seg ettersom det blir mye brukt i dag, og at det er enkelt og raskt å komme i gang med. For å kunne hente nødvendig data, gjøres det spørringer til databasen. Disse inkluderer også pagination spørringer. Siden vi ikke hadde noe behov for relasjoner så passet mongoDb databasen bra.  
 
 ### AsyncStorage
-Gruppen har brukt AsyncStorage fra react-native og ikke react-native-community. Gruppen er klar over at AysyncStorage fra react-native library er deprecated, men det viser seg at det er kun denne som fungerer med expo cli. AsyncStorage brukes til å sette vurderinger gitt til hver enkel restaurant. Det sjekkes om det har blitt gitt vurdering til en spesifikk restaurant fra før av eller ikke, dersom det er gitt så gis det ikke vurdering på nytt. På denne måten unngår vi duplikater vurderinger. I denne prototypen har vi ikke implementert sletting av vurderinger, det vil si at etter det er gitt vurdering er det ikke mulig å oppdatere vurderingen. 
+Gruppen har brukt AsyncStorage fra react-native og ikke react-native-community. Gruppen er klar over at AysyncStorage fra react-native library er deprecated, men det viser seg at det er kun denne som fungerer med expo cli. AsyncStorage brukes til å sette vurderinger gitt til hver enkel restaurant. Det sjekkes om det har blitt gitt vurdering til en spesifikk restaurant fra før av eller ikke, dersom det er gitt så gis det ikke vurdering på nytt. På denne måten unngår vi duplikate vurderinger. I denne prototypen har vi ikke implementert sletting av vurderinger, det vil si at etter det er gitt vurdering er det ikke mulig å oppdatere vurderingen. 
 
 ## InHouse utviklet komponenter
 
@@ -103,7 +112,7 @@ Dette prosjektet hadde ingen krav om automatisert testing, men vi har kontinuerl
 *   feat/feature-name: en branch som brukes for å lage forbedret funksjonalitet av en feature
 
 ## Kjente bugs
-Når man kjøerer NPM INSTALL det kan feile integrity check av en fork av react leaflet. Slett package-lock.json filen og kjør NPM ISTALL på nytt og det vil fikse feilen.
+Når man kjøerer NPM INSTALL det kan feile integrity check av en fork av react leaflet. Slett package-lock.json filen og kjør NPM INSTALL på nytt og det vil fikse feilen.
 ## Inspirasjon og kilder
 Backend koden er inspirert og delvis hentet fra: Carnes, Beau: Learn the MERN stack by building an exercise tracker — MERN Tutorial. Fra: https://medium.com/@beaucarnes/learn-the-mern-stack-by-building-an-exercise-tracker-mern-tutorial-59c13c1237a1. [15.10.2019]
 

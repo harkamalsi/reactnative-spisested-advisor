@@ -1,7 +1,16 @@
 {
   "expo": {
-    "name": "Spisested Advisor",
-    "slug": "project-4",
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "js",
+        "jsx",
+        "svg",
+        "svgx"
+      ]
+    },
+    "name": "Spisested Advisor osm",
+    "slug": "project-4-osm",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -11,9 +20,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./src/assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,10 +30,11 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "**./src/assets*"
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }

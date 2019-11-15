@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg version="1.1" viewBox="0 0 56.940475 55.898602" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:osb="http://www.openswatchbook.org/uri/2009/osb" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient4518" osb:paint="solid">
+   <stop offset="0"/>
+  </linearGradient>
+  <linearGradient id="linearGradient4520" x1="46.9" x2="53.789" y1="176.35" y2="176.35" gradientTransform="translate(-12.246 -194.03)" gradientUnits="userSpaceOnUse" xlink:href="#linearGradient4518"/>
+ </defs>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g transform="translate(-1.015 -1.7551)" stroke="#000">
+  <circle transform="scale(1,-1)" cx="38.098" cy="-17.683" r="3.0623" fill="url(#linearGradient4520)" stroke-width=".765"/>
+  <circle transform="scale(1,-1)" cx="21.88" cy="-17.396" r="3.0623" fill="url(#linearGradient4520)" stroke-width=".765"/>
+  <ellipse cx="29.485" cy="29.704" rx="27.97" ry="27.449" fill="none"/>
+ </g>
+ <path d="m9.1087 26.77c5.4733 27.226 33.753 27.132 38.166-0.37418" fill="none" stroke="#000"/>
+</svg>

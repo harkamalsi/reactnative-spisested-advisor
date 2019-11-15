@@ -102,6 +102,8 @@ Dette prosjektet hadde ingen krav om automatisert testing, men vi har kontinuerl
 *   dev: utviklings-branch. Denne oppdateres jevnlig, hver gang en feature er ferdig
 *   feat/feature-name: en branch som brukes for å lage forbedret funksjonalitet av en feature
 
+## Kjente bugs
+Når man kjøerer NPM INSTALL det kan feile integrity check av en fork av react leaflet. Slett package-lock.json filen og kjør NPM ISTALL på nytt og det vil fikse feilen.
 ## Inspirasjon og kilder
 Backend koden er inspirert og delvis hentet fra: Carnes, Beau: Learn the MERN stack by building an exercise tracker — MERN Tutorial. Fra: https://medium.com/@beaucarnes/learn-the-mern-stack-by-building-an-exercise-tracker-mern-tutorial-59c13c1237a1. [15.10.2019]
 

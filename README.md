@@ -48,7 +48,7 @@ Backend til prosjektet er implementert ved hjelp av Express, som er et Node.js w
 Vi har valgt disse endepunktene fordi vi mener disse er naturlig og enkel å bruke. 
 
 ### MongoDB
-Gruppen tar i bruk MongoDB, og som er installert på den virtuelle maskinen. For å kunne hente nødvendig data må det gjøres spørringer til databasen. Disse inkluderer også pagination spørringer.
+Applikasjonen bruker MongoDB fordi vi mente at MongoDB er svært nyttig å lære seg ettersom det blir mye brukt i dag, og at det er enkelt og raskt å komme i gang med. For å kunne hente nødvendig data, gjøres det spørringer til databasen. Disse inkluderer også pagination spørringer.
 
 ### AsyncStorage
 Gruppen har brukt AsyncStorage fra react-native og ikke react-native-community. Gruppen er klar over at AysyncStorage fra react-native library er deprecated, men det viser seg at det er kun denne som fungerer med expo cli. AsyncStorage brukes til å sette vurderinger gitt til hver enkel restaurant. Det sjekkes om det har blitt gitt vurdering til en spesifikk restaurant fra før av eller ikke, dersom det er gitt så gis det ikke vurdering på nytt. På denne måten unngår vi duplikater vurderinger. I denne prototypen har vi ikke implementert sletting av vurderinger, det vil si at etter det er gitt vurdering er det ikke mulig å oppdatere vurderingen. 

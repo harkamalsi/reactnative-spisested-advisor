@@ -1,44 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
-import List from '../../components/List/List';
+import React, { useState, useEffect } from "react";
+import { Text, View, Alert } from "react-native";
+import List from "../../components/List/List";
 
 const ResultScreen = props => {
   const [restaurants, setRestaurant] = useState([]);
   let [noSearchMatch, setSearchMatch] = useState(false);
   const [page, setPage] = useState(0);
-  const endpoint = 'http://it2810-02.idi.ntnu.no:5050/companies/';
-  let query = props.navigation.getParam('query', 'NO-QUERY');
+  const [isEndOfList, setEndOfList] = useState(false);
+
+  const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/";
+  let query = props.navigation.getParam("query", "NO-QUERY");
 
   const fetchRestaurants = () => {
-    fetch(endpoint + query + page, {
-      headers: {
-        'Content-type': 'text/html; charset=iso-8859-1'
-      },
-      mode: 'cors'
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.error) {
-          throw res.error;
-        }
-        if (res.length === 0 && restaurants.length === 0) {
-          setSearchMatch(true);
-        } else {
-          let tmp = [...restaurants];
-          res.map(restaurant => {
-            tmp.push(restaurant);
-          });
-          setRestaurant(tmp);
-          setPage(page + 1);
-        }
-      });
+    console.log("fetching...");
+    if (!isEndOfList) {
+      fetch(endpoint + query + page, {
+        headers: {
+          "Content-type": "text/html; charset=iso-8859-1"
+        },
+        mode: "cors"
+      })
+        .then(res => res.json())
+        .then(res => {
+          if (res.error) {
+            throw res.error;
+          }
+          if (res.length === 0 && restaurants.length === 0) {
+            setSearchMatch(true);
+          } else {
+            if (res.length === 0) throwEndOfListAlert();
+            let tmp = [...restaurants];
+            res.map(restaurant => {
+              tmp.push(restaurant);
+            });
+            setRestaurant(tmp);
+            setPage(page + 1);
+          }
+        });
+    }
   };
-
+  const throwEndOfListAlert = () => {
+    Alert.alert(
+      "No more restaurants",
+      "It seems you reached the end of the list",
+      [{ text: "OK" }],
+      {
+        cancelable: false
+      }
+    );
+    setEndOfList(true);
+  };
   const handlePress = (id, e) => {
     let restaurant = restaurants.filter(restaurant => {
       return restaurant._id === id;
     })[0];
-    props.navigation.navigate('Detail', {
+    props.navigation.navigate("Detail", {
       restaurant: restaurant,
       id: restaurant._id,
       onNewRating: updateGlobalRating.bind(this)
@@ -67,9 +83,9 @@ const ResultScreen = props => {
   }, []);
   if (noSearchMatch) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text style={{ fontSize: 20 }}>
-          No eateries matched your search.{'\n'}Try broadening the search
+          No restaurants matched your search.{"\n"}Try broadening the search
         </Text>
       </View>
     );

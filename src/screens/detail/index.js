@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Image } from 'react-native';
-import { Dimensions } from 'react-native';
-import Smiley from '../../components/Smiley/Smiley';
-import StarRating from 'react-native-star-rating';
+import React, { useState, useEffect } from "react";
+import { Text, View, Image } from "react-native";
+import { Dimensions } from "react-native";
+import Smiley from "../../components/Smiley/Smiley";
+import StarRating from "react-native-star-rating";
 
-import Map from '../../components/Map/map-native-maps';
+import Map from "../../components/Map/map-native-maps";
 
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
   const [restaurant, setRestaurantDetails] = useState(null);
   const [star, setStar] = useState(0);
   const [starGiven, setStarGiven] = useState(false);
-  const endpoint = 'http://it2810-02.idi.ntnu.no:5050/companies/id=';
-  const id = props.navigation.getParam('id', 'NO-ID');
+  const endpoint = "http://it2810-02.idi.ntnu.no:5050/companies/id=";
+  const id = props.navigation.getParam("id", "NO-ID");
 
   const getStorage = async () => {
     let storageValue;
     try {
-      storageValue = await AsyncStorage.getItem('@favorites');
+      storageValue = await AsyncStorage.getItem("@favorites");
 
       if (storageValue) {
         return JSON.parse(storageValue);
@@ -55,10 +55,10 @@ const DetailScreen = props => {
           newStorage = [...storageFavorites, favorite];
         }
 
-        await AsyncStorage.setItem('@favorites', JSON.stringify(newStorage));
+        await AsyncStorage.setItem("@favorites", JSON.stringify(newStorage));
       }
     } catch (err) {
-      console.log('ERROR SETTING');
+      console.log("ERROR SETTING");
       console.log(err);
     }
   };
@@ -66,9 +66,9 @@ const DetailScreen = props => {
   const fetchRestaurantDetails = () => {
     fetch(endpoint + id, {
       headers: {
-        'Content-type': 'text/html; charset=iso-8859-1'
+        "Content-type": "text/html; charset=iso-8859-1"
       },
-      mode: 'cors'
+      mode: "cors"
     })
       .then(res => res.json())
       .then(res => {
@@ -83,7 +83,7 @@ const DetailScreen = props => {
       .slice(0, 5)
       .map(smiley => (
         <Smiley
-          key={smiley.date + '-' + smiley.grade}
+          key={smiley.date + "-" + smiley.grade}
           value={smiley.grade}
           year={smiley.date.substring(4)}
         ></Smiley>
@@ -92,12 +92,12 @@ const DetailScreen = props => {
   const onStarRatingPress = rating => {
     //logic for comunicating with API
     let body = { id, stars: rating };
-    fetch('http://it2810-02.idi.ntnu.no:5050/companies/giverating', {
-      method: 'PUT',
+    fetch("http://it2810-02.idi.ntnu.no:5050/companies/giverating", {
+      method: "PUT",
       body: JSON.stringify(body),
-      mode: 'cors',
+      mode: "cors",
       headers: {
-        'Content-type': 'application/json; charset=utf-8'
+        "Content-type": "application/json; charset=utf-8"
       }
     })
       .then(res => res.json())
@@ -129,7 +129,7 @@ const DetailScreen = props => {
   useEffect(() => {
     //Fetch details for a restaurant given an ID (props down from previous screen)
     //if there are not passed down as props( from result screen)
-    if (props.navigation.getParam('restaurant', null) !== null)
+    if (props.navigation.getParam("restaurant", null) !== null)
       setRestaurantDetails(props.navigation.state.params.restaurant);
     else fetchRestaurantDetails();
     //Check if there is a saved rating in the local storage
@@ -150,45 +150,47 @@ const DetailScreen = props => {
   if (restaurant !== null) {
     let textRating =
       restaurant.sumStars === 0
-        ? 'No ratings'
-        : 'Rating: ' +
+        ? "No ratings"
+        : "Rating: " +
           (restaurant.sumStars / restaurant.numberOfRatings)
             .toFixed(2)
             .toString();
-    let textStar = !starGiven ? 'Leave a rating:' : 'Your rating:';
+    let textStar = !starGiven ? "Leave a rating:" : "Your rating:";
     //Get the height of the devices screen
-    const screenHeight = Math.round(Dimensions.get('window').height);
+    const screenHeight = Math.round(Dimensions.get("window").height);
     let smileys = formatSmileys(restaurant.smileys);
     let starPic = (
-      <Image style={{ height: 30, width: 30 }} source={require('./star.png')} />
+      <Image style={{ height: 30, width: 30 }} source={require("./star.png")} />
     );
 
     return (
       <View style={{ flex: 1 }}>
         <View
           style={{
-            backgroundColor: '#e2e2e249',
-            flexDirection: 'column',
+            backgroundColor: "#e2e2e249",
+            flexDirection: "column",
             flex: 1
           }}
         >
           <Text
+            numberOfLines={3}
             style={{
               flex: 1.7,
               fontSize: 25,
-              fontWeight: '600',
-              textAlign: 'center',
-              textAlignVertical: 'center'
+              fontWeight: "600",
+              textAlign: "center",
+              textAlignVertical: "center"
             }}
           >
             {restaurant.name}
           </Text>
           <Text
+            numberOfLines={1}
             style={{
               flex: 0.6,
               fontSize: 17,
-              fontWeight: '200',
-              alignSelf: 'center'
+              fontWeight: "200",
+              alignSelf: "center"
             }}
           >
             {restaurant.address}, {restaurant.zipcode}
@@ -197,9 +199,9 @@ const DetailScreen = props => {
           <View
             style={{
               flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center'
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center"
             }}
           >
             {smileys}
@@ -207,16 +209,16 @@ const DetailScreen = props => {
           <View
             style={{
               flex: 1,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center'
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center"
             }}
           >
             <Text
               style={{
                 fontSize: 20,
-                fontWeight: '400',
-                alignSelf: 'center',
+                fontWeight: "400",
+                alignSelf: "center",
                 marginRight: 5
               }}
             >
@@ -228,10 +230,10 @@ const DetailScreen = props => {
             style={{
               flex: 0.6,
               fontSize: 20,
-              fontWeight: '200',
-              alignSelf: 'center',
-              textAlignVertical: 'center',
-              textAlign: 'center'
+              fontWeight: "200",
+              alignSelf: "center",
+              textAlignVertical: "center",
+              textAlign: "center"
             }}
           >
             {textStar}
@@ -239,18 +241,18 @@ const DetailScreen = props => {
           <StarRating
             containerStyle={{
               flex: 1,
-              justifyContent: 'space-evenly',
-              alignItems: 'center'
+              justifyContent: "space-evenly",
+              alignItems: "center"
             }}
             disabled={starGiven}
-            emptyStar={'ios-star-outline'}
-            fullStar={'ios-star'}
-            halfStar={'ios-star-half'}
-            iconSet={'Ionicons'}
+            emptyStar={"ios-star-outline"}
+            fullStar={"ios-star"}
+            halfStar={"ios-star-half"}
+            iconSet={"Ionicons"}
             maxStars={5}
             rating={star}
             selectedStar={rating => onStarRatingPress(rating)}
-            fullStarColor={'orange'}
+            fullStarColor={"orange"}
           />
         </View>
         <View style={{ flex: 1 }}>

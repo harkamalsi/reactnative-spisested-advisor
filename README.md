@@ -53,6 +53,19 @@ Applikasjonen bruker MongoDB fordi vi mente at MongoDB er svært nyttig å lære
 ### AsyncStorage
 Gruppen har brukt AsyncStorage fra react-native og ikke react-native-community. Gruppen er klar over at AysyncStorage fra react-native library er deprecated, men det viser seg at det er kun denne som fungerer med expo cli. AsyncStorage brukes til å sette vurderinger gitt til hver enkel restaurant. Det sjekkes om det har blitt gitt vurdering til en spesifikk restaurant fra før av eller ikke, dersom det er gitt så gis det ikke vurdering på nytt. På denne måten unngår vi duplikater vurderinger. I denne prototypen har vi ikke implementert sletting av vurderinger, det vil si at etter det er gitt vurdering er det ikke mulig å oppdatere vurderingen. 
 
+## InHouse utviklet komponenter
+
+#### List
+Her følte vi behovet for å utvikle egen komponent som skulle visualisere liste av resultaten. Grunnen til det var at vi ønsket med flexibilitet og det skulle tilnærme initiell skysse av appen.
+Mange komponenter hadde flere constrains, så vi endet opp i å lage det selv. Det er basert på React Native Flatlist og det det gjør er å rendre en liste av rad komponenter og gi dem noe ekstra funksjonalitet som onPress.
+I tillegg lager det separatorer for hver rad og håndtere logikken for loading feedback.
+
+### ListRow og ReducedListRow
+Disse er radkomponenter, det ene visualisere mer informasjon enn den andre. Reduced versjonen blir brukt under mine vurderinger for å vise de vurderinger brukeren har gitt som er lagra lokalt, så vi ville ikke visualisere verken siste inspeksjon eller global vurdering siden denne kunne ha blitt opdatert siden vurderingen ble gitt.
+
+###Smiley
+En enkel komponent som render en smilefjes og dato og tar inn dato og verdi som props. Vi synes det skulle være enklere og mer effektiv å hådtere det som komponent siden det blir rendret veldig mange ganger.
+
 ## Tredjepartskomponenter og APIer
 
 #### React-native-maps
@@ -66,6 +79,18 @@ Mongoose er en library for MongoDB og Nodejs som gjør det enklere å kunne jobb
 
 #### Nominatim
 For å mappe restaurantadresser (geocoding), har vi brukt apiet fra [nominatim](https://nominatim.org), ettersom det er open source og ga oss relativt gode resultater for geocoding.  
+
+#### Select2
+React Native port of Jquery Select2. Denne komponenten blir brukt i searchscreen for å kunne velge by-er, smileys og sorteringskriteria. Grunnet at vi har valgt å bruke denne komponenten er fordi den gir gode mulighet til å kunne personalisere den.
+I denne prosjekt ble det brukt 3 ganger i tre forskjellige konfigurasjoner: 
+-Liste av alternativer, velg en, en default valg.
+-Liste av alternativer, velge en eller flere.
+-Liste av alternativer, velge en eller flere, søk blant alternativene.
+
+#### React Navigation
+Denne modulen oppretter en blank canvas for våre appen. Vi har to tabs med en stack på hver, mer forklart øverst.
+Grunnet til bruk av denne modulen er fordi det er veldig kjent i comunity og er veldig godt dokumentert.
+
 
 ## Testing
 Dette prosjektet hadde ingen krav om automatisert testing, men vi har kontinuerlig testet manuelt under utviklingen, og sørget for at alt fungerte slik det skal, før vi pushet til dev og master.

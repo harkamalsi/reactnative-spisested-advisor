@@ -88,7 +88,7 @@ const ResultScreen = props => {
   if (noSearchMatch) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ fontSize: 20 }}>
+        <Text style={{ fontSize: 20, textAlign: "center" }}>
           No restaurants matched your search.{"\n"}Try broadening the search
         </Text>
       </View>

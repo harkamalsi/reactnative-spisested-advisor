@@ -1,14 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import ListRow from "../ListRow/ListRow.js";
 import ReducedListRow from "../ReducedListRow/ReducedListRow.js";
-import { FlatList, View } from "react-native";
+import { FlatList, View, ActivityIndicator } from "react-native";
 import { Dimensions } from "react-native";
-
-//import "./List.css";
-//import fetchMore from "../../fetchDataAction/fetchMoreResturants";
-//import { bindActionCreators } from "redux";
-//import { connect } from "react-redux";
-//import { getResturants } from "../../reducers/fetchResturantsReducer";
 
 /*
     Renders a List like component with clickable rows.
@@ -38,6 +32,27 @@ const List = props => {
   const screenWidth = Math.round(Dimensions.get("window").width);
   //Renders a list with ListRow components if there are enought information,
   //otherwise uses ReducedListRow components
+  renderSeparator = () => {
+    //Renders the separator between each rows
+    return (
+      <View
+        style={{
+          height: 2,
+          width: "100%",
+          backgroundColor: "#CED0CE"
+        }}
+      />
+    );
+  };
+  renderFooter = () => {
+    //it will show indicator at the bottom of the list when data is loading otherwise it returns null
+    if (!props.isLoading) return null;
+    return (
+      <ActivityIndicator
+        style={{ color: "#16a45f", backgroundColor: "#e2e2e249" }}
+      />
+    );
+  };
   return (
     <View style={{ width: screenWidth }}>
       <FlatList
@@ -58,6 +73,8 @@ const List = props => {
             ></ReducedListRow>
           )
         }
+        ItemSeparatorComponent={renderSeparator}
+        ListFooterComponent={renderFooter.bind(this)}
         keyExtractor={item => item._id.toString()}
         onEndReached={props.loadMore}
         onEndReachedThreshold={1}

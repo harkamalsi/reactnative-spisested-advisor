@@ -7,12 +7,14 @@ const Map = props => {
   let coords = props.restaurant.coordinates;
   let noCoords = coords === null ? true : false;
 
+  // if there are no coordinates related to the restaurant, set coordinates to a default value
+  // which in this case is Gløshaugen
   if (noCoords) {
-    // coordinates to gløshaugen
     coords = [63.41557, 10.404599];
   }
 
-  // calculate aspect ratio to center the map on marker
+  // calculate aspect ratio to center the map on and zoomlevel
+  // inspired by: https://stackoverflow.com/a/53868257/9085724
   const { width, height } = Dimensions.get("window");
   const apsect_ratio = width / height;
   const lat = coords[0];
@@ -22,15 +24,20 @@ const Map = props => {
   const latDelta = northeastLat - southwestLat;
   const lngDelta = latDelta * apsect_ratio;
 
+  // coordinates for a restaurant
   const latlng = { latitude: lat, longitude: lng };
+
+  // specifies which region the map should show on first load, and zoomlevel.
   const initialLatlng = {
     ...latlng,
     latitudeDelta: latDelta,
     longitudeDelta: lngDelta
   };
 
+  // a string with the address to the restaurant, which is shown when a marker is clicked
   let popupText = props.restaurant.address + " " + props.restaurant.city;
 
+  // marks the restaurant on the map
   const coordsMarker = () => {
     return (
       <MapView.Marker
@@ -41,18 +48,13 @@ const Map = props => {
     );
   };
 
+  // displays a message if there are no coordinates available
   const noCoordsMarker = () => {
     return (
       <MapView.Marker coordinate={latlng}>
         <View
           {...marker}
-          style={{
-            flex: 1,
-            backgroundColor: "white",
-            borderColor: "white",
-            borderWidth: 5,
-            borderRadius: 20
-          }}
+          style={styles.noCoords}
         >
           <Text style={{ fontSize: 20 }}>
             Position of restaurant not available
@@ -65,10 +67,7 @@ const Map = props => {
   const marker = noCoords ? noCoordsMarker() : coordsMarker();
 
   return (
-    <MapView
-      style={styles.mapStyle}
-      initialRegion={initialLatlng}
-    >
+    <MapView style={styles.mapStyle} initialRegion={initialLatlng}>
       {marker}
     </MapView>
   );
@@ -77,9 +76,13 @@ const Map = props => {
 const styles = StyleSheet.create({
   mapStyle: {
     flex: 1
-
-    /* width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height  */
+  },
+  noCoords: {
+    flex: 1,
+    backgroundColor: "white",
+    borderColor: "white",
+    borderWidth: 5,
+    borderRadius: 20
   }
 });
 

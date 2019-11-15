@@ -3,9 +3,8 @@ import { Text, View, Image } from "react-native";
 import { Dimensions } from "react-native";
 import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
-
-//import Map from '../../components/Map/map-osm';
 import Map from "../../components/Map/map-native-maps";
+import styles from "./styles.js";
 
 import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
@@ -31,14 +30,15 @@ const DetailScreen = props => {
   const setStorage = async favorite => {
     let storageFavorites = await getStorage();
 
-    let storageNames = [];
+    let storageIds = [];
     let setStorage = true;
 
     if (storageFavorites !== undefined) {
-      storageFavorites.forEach(item => storageNames.push(item.name));
+      storageFavorites.forEach(item => storageIds.push(item._id));
 
-      storageNames.forEach(name => {
-        if (name === favorite.name) {
+      // Check to avoid duplicate ratings
+      storageIds.forEach(_id => {
+        if (_id === favorite._id) {
           setStorage = false;
         }
       });
@@ -61,13 +61,9 @@ const DetailScreen = props => {
       console.log("ERROR SETTING");
       console.log(err);
     }
-
-    console.log(storageNames);
   };
 
-  // DEAD CODE??? VVVVV
   const fetchRestaurantDetails = () => {
-    console.log(endpoint + id);
     fetch(endpoint + id, {
       headers: {
         "Content-type": "text/html; charset=iso-8859-1"
@@ -79,7 +75,6 @@ const DetailScreen = props => {
         if (res.error) {
           throw res.error;
         }
-        console.log("res", res[0]);
         setRestaurantDetails(res[0]);
       });
   };
@@ -121,12 +116,7 @@ const DetailScreen = props => {
           setStar(rating);
           setStarGiven(true);
           fetchRestaurantDetails();
-          console.log(
-            "new values",
-            id,
-            restaurant.sumStars + rating,
-            restaurant.numberOfRatings + 1
-          );
+
           props.navigation.state.params.onNewRating(
             id,
             restaurant.sumStars + rating,
@@ -139,13 +129,9 @@ const DetailScreen = props => {
   useEffect(() => {
     //Fetch details for a restaurant given an ID (props down from previous screen)
     //if there are not passed down as props( from result screen)
-    //const name = props.navigation.getParam("restaurant", null);
-    //console.log("name", name);
     if (props.navigation.getParam("restaurant", null) !== null)
       setRestaurantDetails(props.navigation.state.params.restaurant);
     else fetchRestaurantDetails();
-    //TODO: implementer symbiosis med backend
-    // setRestaurantDetails(example);
     //Check if there is a saved rating in the local storage
     getStorage().then(favouriteRestaurants =>
       favouriteRestaurants.forEach(favouriteRestaurant => {
@@ -183,80 +169,24 @@ const DetailScreen = props => {
           style={{
             backgroundColor: "#e2e2e249",
             flexDirection: "column",
-            //justifyContent: "flex-start",
             flex: 1
           }}
         >
-          <Text
-            style={{
-              flex: 1.7,
-              fontSize: 25,
-              fontWeight: "600",
-              textAlign: "center",
-              textAlignVertical: "center"
-            }}
-          >
+          <Text numberOfLines={3} style={styles.NameText}>
             {restaurant.name}
           </Text>
-          <Text
-            style={{
-              flex: 0.6,
-              fontSize: 17,
-              fontWeight: "200",
-              alignSelf: "center"
-            }}
-          >
+          <Text numberOfLines={1} style={styles.AddressText}>
             {restaurant.address}, {restaurant.zipcode}
           </Text>
 
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center"
-            }}
-          >
-            {smileys}
-          </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "400",
-                alignSelf: "center",
-                marginRight: 5
-              }}
-            >
-              {textRating}
-            </Text>
+          <View style={styles.Smileys}>{smileys}</View>
+          <View style={styles.RatingContainer}>
+            <Text style={styles.RatingText}>{textRating}</Text>
             {starPic}
           </View>
-          <Text
-            style={{
-              flex: 0.6,
-              fontSize: 20,
-              fontWeight: "200",
-              alignSelf: "center",
-              textAlignVertical: "center",
-              textAlign: "center"
-            }}
-          >
-            {textStar}
-          </Text>
+          <Text style={styles.StarText}>{textStar}</Text>
           <StarRating
-            containerStyle={{
-              flex: 1,
-              justifyContent: "space-evenly",
-              alignItems: "center"
-            }}
+            containerStyle={styles.StarContainer}
             disabled={starGiven}
             emptyStar={"ios-star-outline"}
             fullStar={"ios-star"}

@@ -3,8 +3,8 @@ import { Text, View, Image } from "react-native";
 import { Dimensions } from "react-native";
 import Smiley from "../../components/Smiley/Smiley";
 import StarRating from "react-native-star-rating";
-
 import Map from "../../components/Map/map-native-maps";
+import styles from "./styles.js";
 
 import { AsyncStorage } from "react-native";
 const DetailScreen = props => {
@@ -172,78 +172,21 @@ const DetailScreen = props => {
             flex: 1
           }}
         >
-          <Text
-            numberOfLines={3}
-            style={{
-              flex: 1.7,
-              fontSize: 25,
-              fontWeight: "600",
-              textAlign: "center",
-              textAlignVertical: "center"
-            }}
-          >
+          <Text numberOfLines={3} style={styles.NameText}>
             {restaurant.name}
           </Text>
-          <Text
-            numberOfLines={1}
-            style={{
-              flex: 0.6,
-              fontSize: 17,
-              fontWeight: "200",
-              alignSelf: "center"
-            }}
-          >
+          <Text numberOfLines={1} style={styles.AddressText}>
             {restaurant.address}, {restaurant.zipcode}
           </Text>
 
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-around",
-              alignItems: "center"
-            }}
-          >
-            {smileys}
-          </View>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "400",
-                alignSelf: "center",
-                marginRight: 5
-              }}
-            >
-              {textRating}
-            </Text>
+          <View style={styles.Smileys}>{smileys}</View>
+          <View style={styles.RatingContainer}>
+            <Text style={styles.RatingText}>{textRating}</Text>
             {starPic}
           </View>
-          <Text
-            style={{
-              flex: 0.6,
-              fontSize: 20,
-              fontWeight: "200",
-              alignSelf: "center",
-              textAlignVertical: "center",
-              textAlign: "center"
-            }}
-          >
-            {textStar}
-          </Text>
+          <Text style={styles.StarText}>{textStar}</Text>
           <StarRating
-            containerStyle={{
-              flex: 1,
-              justifyContent: "space-evenly",
-              alignItems: "center"
-            }}
+            containerStyle={styles.StarContainer}
             disabled={starGiven}
             emptyStar={"ios-star-outline"}
             fullStar={"ios-star"}

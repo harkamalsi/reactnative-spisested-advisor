@@ -3,7 +3,7 @@ import { Text, View, ImageBackground, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { Input } from "react-native-elements";
 import Select2 from "react-native-select-two";
-import styles from "./styling-home";
+import styles from "./styles";
 
 const smileyAlternatives = [
   { id: "0", name: "Happy" },
